@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Payment - {{ event.title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Complete Payment for {{ event.title }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Event Details</h5>
+                            <p><strong>Title:</strong> {{ event.title }}</p>
+                            <p><strong>Date:</strong> {{ event.event_date }}</p>
+                            <p><strong>Time:</strong> {{ event.start_time }} - {{ event.end_time }}</p>
+                            <p><strong>Location:</strong> {{ event.location_name }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Payment Details</h5>
+                            <p><strong>Amount:</strong> ₹{{ amount }}</p>
+                            <p><strong>Currency:</strong> INR</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <button id="rzp-button" class="btn btn-primary btn-lg">Pay ₹{{ amount }}</button>
+                        <a href="{% url 'events' event.id %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+var options = {
+    "key": "{{ razorpay_key_id }}",
+    "amount": "{{ amount_in_paise }}",
+    "currency": "INR",
+    "name": "WedJoy",
+    "description": "Event Registration - {{ event.title }}",
+    "order_id": "{{ order_id }}",
+    "handler": function (response){
+        // Handle success
+        fetch("{% url 'payments:payment_success' %}?event_id={{ event.id }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.status === 'success') {
+                alert('Payment successful! Registration completed.');
+                window.location.href = "{% url 'events' event.id %}";
+            } else {
+                alert('Payment verification failed: ' + data.message);
+            }
+        })
+        .catch(error => {
+            alert('Error processing payment: ' + error);
+        });
+    },
+    "modal": {
+        "ondismiss": function(){
+            // Handle when user closes the payment modal
+            alert('Payment cancelled');
+        }
+    },
+    "prefill": {
+        "name": "{{ user.firstName }} {{ user.lastName }}",
+        "email": "{{ user.email }}",
+        "contact": "{{ user.phone_number }}"
+    },
+    "theme": {
+        "color": "#4CAF50"
+    }
+};
+
+var rzp = new Razorpay(options);
+
+document.getElementById('rzp-button').onclick = function(e){
+    rzp.open();
+    e.preventDefault();
+};
+</script>
+{% endblock %}

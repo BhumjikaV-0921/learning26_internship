@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="signup-body">
+
+<div class="overlay" >
+    <div style="margin-top:3%;margin-left:12%" class="form-container">
+         <a href="{% url 'home' %}"><img src="{% static 'images/home.png' %}" style="position:absolute;width:25px;algin-item:center;margin-left:63%"></a>
+        <h2 class="form-title" style="margin-left:62%">Welcome back</h2>
+        <p class="form-subtitle" style="margin-left:57%">Sign in to continue to your community</p>
+    <img src="{% static 'images/logo1.png' %}" style="position:absolute;width:10%;margin-top:-12%;algin-item:center;margin-left:40%">
+
+         <form method="post" style="margin-left:50%;width:450px;margin-top:10%">
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <div class="form-group" style="margin-bottom:5%;background:#fff">
+                        <label for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                        </label>
+
+                        {{ field }}
+
+                        {% if field.errors %}
+                            <small class="error">
+                                {{ field.errors|striptags }}
+                            </small>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="submit-btn">Sign In</button>
+
+                <p class="login-link">
+                    Already have an account?
+                    <a href="{% url 'signup' %}" style="color:#">SignUp</a>
+                </p>
+            </form>
+
+
+    </div>
+    <div class="right-half-grid">
+    <img src="{% static 'images/login.jpg' %}" style="position:absolute;height:88.5%;margin-top:-42.5%;margin-left:12%;border-radius:10px;border-bottom-right-radius:200px ;border-top-right-radius:200px ;">
+    </div>
+</div>
+
+</body>
+</html>
+

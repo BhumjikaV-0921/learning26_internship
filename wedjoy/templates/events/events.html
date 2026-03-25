@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+{%block content %}
+
+<!-- HERO -->
+ <section class="about-hero" style="background-image: url('{{ eventDetails.cover_image.url }}'); background-position: bottom;">
+    <div class="overlay"></div>
+    <div class="hero-inner container">
+        <h1 style="color:#ffd3ac;font-size: 3rem; margin-top:5%;">{{eventDetails.title}}</h1>
+        <p class="hero-subtext" id="hero-text">
+          Browse and join local events, from sports and culture to volunteer opportunities and social gatherings.
+        </p>
+        <nav class="breadcrumb">
+            <a href="{% url 'showEvents' %}">Back</a> ‹ <span>Events</span>
+        </nav>
+    </div>
+</section>
+<div class="layout" style="padding: 0 8%;">
+<!-- LEFT SIDE -->
+<div class="left" >
+<h2 style="color:#002d28;">Event Details</h2>
+
+<div class="details-grid">
+
+<div class="detail-card">
+<img src="{% static 'images/calendar.png' %}" style="width:5%">
+
+<div>
+<p class="label">Date</p>
+<p>{{eventDetails.event_date}}</p>
+</div>
+
+</div>
+
+
+<div class="detail-card">
+<img src="{% static 'images/clock.png' %}" style="width:5%">
+
+<div>
+<p class="label">Time</p>
+<p>{{ eventDetails.start_time}} - {{eventDetails.end_time}}</p>
+</div>
+
+</div>
+
+
+<div class="detail-card location">
+<img src="{% static 'images/pin.png' %}" style="width:4%;margin-right:5%">
+<div style="margin-left:-40%">
+<p class="label" >Location</p>
+<p>{{eventDetails.address}}</p>
+<small>{{eventDetails.location_name}}</small>
+</div>
+
+<button class="map-btn" onclick="openMap()">View Map</button>
+
+</div>
+
+</div>
+
+
+<div class="about">
+
+<h3 style="color:#002d28;">About This Event</h3>
+
+<p>
+{{eventDetails.description}}
+</p>
+
+
+</div>
+
+</div>
+
+
+
+<!-- RIGHT SIDEBAR -->
+
+<div class="sidebar">
+
+
+<div class="ticket-card">
+
+<h2>{{eventDetails.registration_fee}}</h2>
+<p class="spots">16 spots left</p>
+
+
+<a href="{% url 'Eventrsvp' eventDetails.id %}">
+    <button class="rsvp">RSVP Now</button>
+</a>
+</div>
+<div class="organizer">
+
+<div class="organizer-top">
+
+<div class="avatar">  {{ eventDetails.organizer.firstName|slice:":1" }}{{eventDetails.organizer.lastName|slice:":1" }}</div>
+
+<div>
+<h4>{{ eventDetails.organizer.firstName }} {{ eventsDetails.organizer.lastName }}</h4>
+<p>Certified Yoga Instructor</p>
+</div>
+
+</div>
+
+<p class="organizer-desc">
+Maya has been teaching yoga for over 10 years and is passionate about
+bringing wellness to her community.
+</p>
+
+<p><i class="fa fa-envelope"></i> {{ eventDetails.organizer.email }}</p>
+<p><i class="fa fa-phone"></i> {{ eventDetails.organizer.phone_number }}</p>
+
+<button class="contact">Contact Organizer</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- MAP MODAL -->
+<div id="mapModal" class="map-modal">
+    <div class="map-modal-content">
+        
+        <span class="close-btn" onclick="closeMap()">&times;</span>
+
+        <iframe
+            width="100%"
+            height="400"
+            style="border:0"
+            loading="lazy"
+            allowfullscreen
+            src="https://maps.google.com/maps?q={{ eventDetails.latitude }},{{ eventDetails.longitude }}&z=15&output=embed">
+        </iframe>
+
+    </div>
+</div>
+
+<script>
+function openMap() {
+    document.getElementById("mapModal").style.display = "block";
+}
+
+function closeMap() {
+    document.getElementById("mapModal").style.display = "none";
+}
+
+// Optional: close when clicking outside
+window.onclick = function(event) {
+    var modal = document.getElementById("mapModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+
+{% endblock content %}

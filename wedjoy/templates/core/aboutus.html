@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load static %}
+{%block content %}
+
+<!-- HERO -->
+<section class="about-hero">
+    <div class="overlay"></div>
+    <div class="hero-inner container">
+        <h1 style="color:#ffd3ac;font-size: 3rem; margin:0;">About Us</h1>
+        <p class="hero-subtext" id="hero-text">
+            Discover inspiring events, support local businesses, and make a difference
+            through meaningful volunteer opportunities.
+        </p>
+        <nav class="breadcrumb">
+            <a href="{% url 'home' %}">Home</a> ‹ <span>About us</span>
+        </nav>
+    </div>
+</section>
+
+<div class="p1"> 
+  <center><div><img src="{% static 'images/pins.png' %}" style="margin-top:0%" height="70" width="70"></div>
+  <h1 align="center" style="font-family:Times New Roman,Times,serif;color:#002d28;">Building Stronger Neighborhoods</span> </h1><br>
+  <p class="pe">Our platform is designed to bring people together through events, local businesses, and volunteer opportunities. We believe <br> that strong communities grow when people connect, explore, and collaborate. Whether you're looking to discover exciting local events, <br>support nearby businesses, or contribute through volunteering, our platform makes it easy to find meaningful opportunities around you.<br> Our goal is simple: build a vibrant community where everyone can belong, participate, and grow.
+  <br><br>
+</p><br>
+</div></center><br><br>
+
+<!-- INTRODUCTION CARD (half image/text layout) -->
+<section class="about-intro container half-section">
+    <div class="half-image">
+        <img src="{% static "images/about4.jpg" %}" alt="">
+    </div>
+    <div class="half-text">
+        <h2 class="p1" style="font-family:Times New Roman,Times,serif;color:#002d28;margin-bottom: 5%;font-size:35px;">About Our Platform</h2>
+        <p class="p">Our platform is designed to bring people together through events, local businesses, and volunteer opportunities.
+We believe that strong communities grow when people connect, explore, and collaborate.
+
+Whether you're looking to discover exciting local events, support nearby businesses, or contribute through volunteering, our platform makes it easy to find meaningful opportunities around you.
+Our goal is simple: build a vibrant community where everyone can belong, participate, and grow.</p>
+        <p><strong>ConectWith Us:</strong> support@linkup.com</p>
+    </div>
+</section>
+<br>
+<!-- FEATURE BOXES -->
+
+        <h2 class="p1" style="font-family:Times New Roman,Times,serif;color:#002d28;margin-top:3%;margin-bottom: 3%;font-size:35px;text-align: center;"> What We Offer</h2>
+
+<section class="features container">
+    <div class="feature">
+        <img src="{% static 'images/calendar.png' %}" alt="" class="feature-icon">
+        <h3>Discover Local Events</h3>
+        <p>Explore exciting events happening around you, from workshops and meetups to cultural gatherings and networking opportunities in your community.</p>
+    </div>
+    <div class="feature">
+        <img src="{% static 'images/pin.png' %}" alt="" class="feature-icon">
+        <h3>Explore Local Businesses</h3>
+        <p>Find and support amazing local businesses in your area. Discover cafes, creative spaces, services, and entrepreneurs that make your community unique.</p>
+    </div>
+    <div class="feature">
+        <img src="{% static 'images/people.png' %}" alt="" class="feature-icon">
+        <h3>Volunteer Opportunities</h3>
+        <p>Make a positive impact by joining volunteer activities organized by local groups and organizations that are working to improve the community.</p>
+    </div>
+    <div class="feature">
+        <img src="{% static 'images/conecction.png' %}" alt="" class="feature-icon">
+        <h3>Build Meaningful Connections</h3>
+        <p>Meet people who share your interests, passions, and goals. Create lasting connections through shared experiences and community engagement.</p>
+    </div>
+</section>
+
+<section class="journey">
+    <div class="container">
+
+        <p class="subtitleAbout">OUR JOURNEY</p>
+        <h2 class="p1" style="font-family:Times New Roman,Times,serif;color:#002d28;margin-bottom: 5%;font-size:35px;">How We Got Here</h2>
+
+        <div class="timeline">
+
+            <div class="timeline-line"></div>
+
+            <div class="timeline-item">
+                <div class="dot"></div>
+                <span class="year">2021</span>
+                <h3>The Spark</h3>
+                <p>
+                    Sofia couldn't find a simple way to discover what was
+                    happening in her own barrio. BarrioBuzz was born from that frustration.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="dot"></div>
+                <span class="year">2022</span>
+                <h3>First 1,000</h3>
+                <p>
+                    Word spread organically — neighbors told neighbors.
+                    We hit 1K members without spending a dollar on ads.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="dot"></div>
+                <span class="year">2023</span>
+                <h3>City-Wide</h3>
+                <p>
+                    Partnered with local governments and expanded across the
+                    entire metro area. Businesses started signing up daily.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="dot"></div>
+                <span class="year">2024</span>
+                <h3>12K Strong</h3>
+                <p>
+                    A thriving ecosystem of residents, businesses, and organizers —
+                    and we're just getting started.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+ {% endblock content %}

@@ -1,0 +1,74 @@
+{% extends "adminpanel/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<!-- CARDS -->
+<div class="cards">
+
+    <div class="card">
+        <h3>Total Users</h3>
+        <h2>{{ total_users }}</h2>
+    </div>
+
+    <div class="card">
+        <h3>Total Events</h3>
+        <h2>{{ total_events }}</h2>
+    </div>
+
+    <div class="card">
+        <h3>Total Businesses</h3>
+        <h2>{{ total_businesses }}</h2>
+    </div>
+
+    <div class="card">
+        <h3>Volunteers</h3>
+        <h2>{{ total_volunteers }}</h2>
+    </div>
+
+</div>
+
+<!-- CHARTS -->
+<div class="charts">
+
+    <!-- LINE -->
+    <div class="chart-box">
+        <h3>Platform Growth</h3>
+        <canvas id="lineChart"></canvas>
+    </div>
+
+    <!-- DONUT -->
+    <div class="chart-box">
+        <h3>Business Categories</h3>
+        <canvas id="donutChart"></canvas>
+    </div>
+
+</div>
+
+<script>
+new Chart(document.getElementById('lineChart'), {
+    type: 'line',
+    data: {
+        labels: ['Jan','Feb','Mar','Apr','May','Jun'],
+        datasets: [{
+            label: 'Growth',
+            data: [100, 300, 250, 400, 500, 600],
+            borderWidth: 2,
+            fill: true
+        }]
+    }
+});
+
+new Chart(document.getElementById('donutChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Food','Health','Shopping','Services'],
+        datasets: [{
+            data: [35,25,20,20]
+        }]
+    }
+});
+</script>
+
+{% endblock %}

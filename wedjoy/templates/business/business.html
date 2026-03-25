@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static %}
+{%block content %}
+<div>
+ <section class="about-hero" style="background-image: url('{{ businessDetails.photo.url }}');">
+    <div class="overlay"></div>
+    <div class="hero-inner container">
+        <h1 style="color:#ffd3ac;font-size: 3rem; margin-top:5%;">Support Your Neighborhood</h1>
+        <p class="hero-subtext" id="hero-text">
+          Discover local gems, from cozy cafés to fitness studios. Every purchase supports your community.
+        </p>
+        <nav class="breadcrumb">
+            <a href="{% url 'showbusiness' %}">Back </a> ‹ <span>Business</span>
+        </nav>
+    </div>
+</section>
+
+<div class="business-layout" style="padding:0 5%;">
+
+<!-- LEFT SIDE -->
+<div class="left-section">
+
+<div class="image-card">
+
+<span class="offer-badge">15% off for neighbors!</span>
+
+<img src="{{ businessDetails.photo.url }}" class="main-img">
+</div>
+
+
+<div class="business-info">
+
+<span class="category">{{ businessDetails.category }}</span>
+
+<div class="rating">
+<i class="fa fa-star"></i>
+4.8 (124 reviews)
+</div>
+
+<h1>{{businessDetails.business_name }}</h1>
+
+<p>
+{{ businessDetails.description }}
+</p>
+
+</div>
+
+</div>
+
+
+<!-- RIGHT SIDE -->
+<div class="sidebar">
+
+<div class="status">
+<i class="fa fa-clock"></i> Open Now
+</div>
+
+<ul class="hours">
+
+<li><span>Monday</span> <span>{{ businessDetails.monday_open }} - {{ businessDetails.monday_close }}</span></li>
+<li><span>Tuesday</span> <span>{{ businessDetails.tuesday_open }} - {{ businessDetails.tuesday_close }}</span></li>
+<li><span>Wednesday</span> <span>{{ businessDetails.wednesday_open }} - {{ businessDetails.wednesday_close }}</span></li>
+<li><span>Thursday</span> <span>{{ businessDetails.thursday_open }} - {{ businessDetails.thursday_close }}</span></li>
+<li><span>Friday</span> <span>{{ businessDetails.friday_open }} - {{ businessDetails.friday_close }}</span></li>
+<li><span>Saturday</span> <span>{{ businessDetails.saturday_open }} - {{ businessDetails.saturday_close }}</span></li>
+<li><span>Sunday</span> <span>{{ businessDetails.sunday_open }} - {{ businessDetails.sunday_close }}</span></li>
+
+</ul>
+
+<div class="contact">
+
+<p><i class="fa fa-location-dot"></i>{{ businessDetails.address }}</p>
+
+<p><i class="fa fa-phone"></i>{{ businessDetails.phone}}</p>
+
+<p><i class="fa fa-envelope"></i>{{ businessDetails.email }}</p>
+
+<p><i class="fa fa-globe"></i>{{ businessDetails.owner.firstName }} {{ businessDetails.owner.lastName }}</p>
+
+</div>
+
+<div class="buttons">
+
+<button class="call-btn">
+<i class="fa fa-phone"></i> Call
+</button>
+
+
+<button class="direction-btn" onclick="openMap()">View Map</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- MAP MODAL -->
+<div id="mapModal" class="map-modal">
+    <div class="map-modal-content">
+        
+        <span class="close-btn" onclick="closeMap()">&times;</span>
+
+        <iframe
+            width="100%"
+            height="400"
+            style="border:0"
+            loading="lazy"
+            allowfullscreen
+            src="https://maps.google.com/maps?q={{ eventDetails.latitude }},{{ eventDetails.longitude }}&z=15&output=embed">
+        </iframe>
+
+    </div>
+</div>
+
+<script>
+function openMap() {
+    document.getElementById("mapModal").style.display = "block";
+}
+
+function closeMap() {
+    document.getElementById("mapModal").style.display = "none";
+}
+
+// Optional: close when clicking outside
+window.onclick = function(event) {
+    var modal = document.getElementById("mapModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+
+{%  endblock content %}

@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wedjoy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS File -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body  style="background:linear-gradient(90deg,#7b4b2a,#c08a5d,#7b4b2a);">
+
+    <!-- ===== Navbar ===== -->
+    <header class="wj-navbar-header">
+        <nav class="wj-navbar-container">
+            <ul class="wj-navbar-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'userupdateprofile' %}">Update Profile</a></li>
+                <li><a href="{% url 'userregisteredevents' %}">Registered Event</a></li>
+                <li><a href="{% url 'uservolunteering' %}">Volunteering Participation</a></li>
+                <li><a href="{% url 'usersecurity' %}">Security</a></li>
+                <li><a href="{% url 'usercomments' %}">Comments</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ===== Page Content ===== -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+</html>

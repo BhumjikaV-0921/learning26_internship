@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Networking - Wedjoy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #4B0F12 0%, #875852 100%);
+            color: white;
+            padding: 100px 8%;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .hero-section p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .content-section {
+            padding: 80px 8%;
+            background: #f8f9fa;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 60px;
+            font-weight: 600;
+        }
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(75, 15, 18, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(75, 15, 18, 0.15);
+        }
+        .card-icon {
+            font-size: 3rem;
+            color: #4B0F12;
+            margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .card-description {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            .hero-section p {
+                font-size: 1.1rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1>Professional Networking</h1>
+        <p>Connect with industry leaders, expand your network, and unlock new opportunities in your career journey.</p>
+    </section>
+
+    <!-- Features Section -->
+    <section class="content-section">
+        <h2 class="section-title">Build Meaningful Connections</h2>
+        <div class="cards-grid">
+            <div class="card">
+                <i class="fas fa-handshake card-icon"></i>
+                <h3 class="card-title">Connect</h3>
+                <p class="card-description">Find and connect with professionals in your field. Build relationships that matter for your career growth.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-chart-line card-icon"></i>
+                <h3 class="card-title">Grow</h3>
+                <p class="card-description">Expand your professional network and gain access to exclusive opportunities, insights, and mentorship.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-users card-icon"></i>
+                <h3 class="card-title">Collaborate</h3>
+                <p class="card-description">Work together on projects, share ideas, and create synergies that drive innovation and success.</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
+{% endblock %}

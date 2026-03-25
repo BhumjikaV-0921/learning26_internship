@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Volunteer Registration Confirmation</title>
+</head>
+<body>
+<p>Hi {{ user.firstName|default:user.email }},</p>
+<p>Thank you for signing up for the volunteer opportunity: <strong>{{ event.title }}</strong>.</p>
+<p>We received your registration details and our team will contact you with next steps soon.</p>
+<p>If you have further questions, reply to this message.</p>
+<p>Best,<br/>WedJoy Team</p>
+</body>
+</html>

@@ -1,0 +1,130 @@
+{% include "adminpanel/base.html" %}
+{% block content %}
+{% load static %}
+<div style="margin-top:-40%;margin-left:18%;overflow:hidden">
+
+<!-- 🔷 TOP CARDS -->
+<div class="cards">
+
+    <div class="card">
+        <h3>Total Opportunities</h3>
+        <h2>{{ total_opportunities }}</h2>
+         <div> <img src="{% static 'images/opportunity.png' %}" style="width:15%"> </div>
+
+    </div>
+
+    <div class="card">
+        <h3>Active</h3>
+        <h2>{{ active_count }}</h2>
+         <div> <img src="{% static 'images/check-circle.png' %}" style="width:15%"> </div>
+
+    </div>
+
+    <div class="card">
+        <h3>Upcoming</h3>
+        <h2>{{ upcoming_count }}</h2>
+         <div> <img src="{% static 'images/next-week.png' %}" style="width:15%"> </div>
+
+    </div>
+
+    <div class="card">
+        <h3>Total Participants</h3>
+        <h2>{{ total_participants }}</h2>
+         <div> <img src="{% static 'images/people.png' %}" style="width:15%"> </div>
+
+    </div>
+
+</div>
+
+<!-- 🔍 SEARCH + FILTER -->
+<form method="GET" class="toolbar">
+
+    <input type="text" name="q" placeholder="Search opportunities..." value="{{ request.GET.q }}">
+
+    <select name="status">
+        <option value="all">All Status</option>
+        <option value="active">Active</option>
+        <option value="upcoming">Upcoming</option>
+        <option value="expired">Expired</option>
+    </select>
+
+    <button type="submit">Filter</button>
+
+</form>
+
+<!-- 📋 TABLE -->
+<div class="table-container">
+<table>
+
+<thead>
+<tr>
+    <th>Opportunity</th>
+    <th>Location</th>
+    <th>Dates</th>
+    <th>Status</th>
+    <th>Participants</th>
+    <th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+{% for v in opportunities %}
+<tr>
+
+<td>
+    <div class="user">
+       <img src={{ v.cover_image.url }} class="avatar">
+        <div>
+            <strong>{{ v.title }}</strong><br>
+            <small>{{ v.organization }}</small>
+        </div>
+    </div>
+</td>
+
+<td>{{ v.location }}</td>
+
+<td>{{ v.start_date }} → {{ v.end_date }}</td>
+
+<td>
+    {% if v.status_label == "Active" %}
+        <span class="badge green">Active</span>
+    {% elif v.status_label == "Upcoming" %}
+        <span class="badge gray">Upcoming</span>
+    {% else %}
+        <span class="badge red">Expired</span>
+    {% endif %}
+</td>
+
+<td>
+    {{ v.participant_count }}
+</td>
+
+<td class="actions">
+
+    <a href="{% url 'adminpanel:edit_volunteer' v.id %}" class="btn gray">Edit</a>
+
+    <a href="{% url 'adminpanel:participants' v.id %}" class="btn blue">View</a>
+
+    <a href="{% url 'adminpanel:delete_volunteer' v.id %}" 
+       class="btn red"
+       onclick="return confirm('Delete this opportunity?')">
+       Delete
+    </a>
+
+</td>
+
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+</div>
+
+<br>
+<a href="{% url 'adminpanel:create_volunteer' %}" class="btn green">
+    + Create New Opportunity
+</a>
+
+</div>
+
+{% endblock %}

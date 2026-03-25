@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include 'core/header.html' %}
+    <!-- MESSAGES HERE -->
+{% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% block content %}
+
+{% endblock content %}
+
+{% include 'core/footer.html' %}
+<script>
+setTimeout(() => {
+    document.querySelectorAll('.alert').forEach(el => {
+        el.style.display = 'none';
+    });
+}, 3000);
+</script>
+</body>
+</html>

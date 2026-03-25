@@ -1,0 +1,1365 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background:#f6f8f7;
+}
+
+
+.dashboard-container {
+    display: flex;
+}
+
+/* ================= Sidebar ================= */
+
+.sidebar {
+    width: 240px;
+    position: fixed;
+    overflow: hidden;
+    height: 100%;
+    background: #ffffff;
+    padding: 25px;
+    border-right: 1px solid #e5e5e5;
+
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.nav {
+    list-style: none;
+}
+
+.nav li {
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Hover Effect */
+.nav li:hover {
+    background: #ffd3acc4;
+    transform: translateX(5px);
+}
+
+/* Active Menu */
+.nav .active {
+    background: #ffd3acc4;
+    font-weight: 500;
+    border-left: 4px ;
+    padding-left: 11px;
+}
+
+/* Icon Styling */
+.nav li i {
+    font-size: 16px;
+    width: 20px;
+    transition: 0.3s;
+}
+
+.nav li:hover i {
+    color: #7b4b2a;
+}
+
+.nav .active i {
+    color: #7b4b2a;
+}
+
+/* Logout Menu */
+
+.logout-menu {
+    color: #c0392b;
+    font-weight: 500;
+}
+
+.logout-menu:hover {
+    background: #ffe5e5;
+    transform: translateX(5px);
+}
+
+.logout-menu i {
+    color: #c0392b;
+}
+
+.logout-menu:hover i {
+    color: #e74c3c;
+}
+
+/* Back Link */
+.back-link {
+    margin-top: auto;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-link:hover {
+    color: #7b4b2a;
+}
+
+/* Push Back link to bottom */
+.back-link {
+    margin-top: auto;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    padding-top: 15px;
+}
+
+.back-link:hover {
+    color: #1c7c54;
+}
+
+/* ================= Main Content ================= */
+
+.main-content {
+    flex: 1;
+    padding: 30px 40px;
+    margin-left: 240px;
+    width: calc(100% - 240px);
+}
+
+/* ================= Top Bar ================= */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+
+.topbar h1 {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 35px;
+    height: 35px;
+    background: #ffd3acc4;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.create-btn {
+    background: #7b4b2a;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.create-btn:hover {
+    background: #5c3620;
+    transform: translateY(-2px);
+}
+/* ================= 3D Stats Cards ================= */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-bottom: 40px;
+}
+/* ================= Modern Typical Shadow Stats Cards ================= */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    /* Typical Clean Shadow */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    transition: all 0.3s ease;
+}
+
+/* Hover Effect */
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.15);
+}
+
+/* Icon Circle */
+.card-icon {
+    width: 50px;
+    height: 50px;
+    background: #7b4b2a;
+    color: white;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+
+    box-shadow: 0 4px 10px rgba(123, 75, 42, 0.3);
+}
+
+/* Text */
+.card-info h2 {
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+
+.card-info p {
+    color: #777;
+    font-size: 14px;
+}
+
+/* Icon Circle */
+.card-icon {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(145deg, #7b4b2a, #5c3620);
+    color: white;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+    box-shadow: 0 8px 15px rgba(123,75,42,0.4);
+}
+
+/* Text Section */
+.card-info h2 {
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+
+.card-info p {
+    color: #777;
+    font-size: 14px;
+}
+
+/* ================= Events Section ================= */
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.section-header a {
+    text-decoration: none;
+    color: #1c7c54;
+    font-weight: 500;
+}
+
+.section-header a:hover {
+    text-decoration: underline;
+}
+
+/* ================= Event Card ================= */
+
+.events-section {
+    background: linear-gradient(145deg, #ffffff, #f3f3f3);
+    padding: 30px;
+    border-radius: 25px;
+
+    box-shadow: 10px 10px 25px rgba(0,0,0,0.08),
+                -10px -10px 25px rgba(255,255,255,0.9);
+
+    margin-top: 20px;
+}
+
+.event-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.event-card h4 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.event-card p {
+    font-size: 13px;
+    color: #777;
+}
+
+
+
+/* Section Header */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.section-header h3 {
+    font-size: 20px;
+}
+
+.section-header a {
+    text-decoration: none;
+    color: #7b4b2a;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.section-header a:hover {
+    text-decoration: underline;
+}
+
+/* ================= Badges ================= */
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.published {
+    background: #d4f5e9;
+    color: #1c7c54;
+}
+
+.draft {
+    background: #e5e5e5;
+    color: #555;
+}
+
+/* ================= Progress Bar ================= */
+
+.progress-box {
+    width: 200px;
+    text-align: right;
+}
+
+.progress-box span {
+    font-size: 12px;
+}
+
+/* 3D Event Card */
+.event-card {
+    background: linear-gradient(145deg, #ffffff, #f1f1f1);
+    padding: 20px 25px;
+    border-radius: 18px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+
+    box-shadow: 6px 6px 18px rgba(0,0,0,0.07),
+                -6px -6px 18px rgba(255,255,255,0.9);
+
+    transition: all 0.3s ease;
+}
+
+/* ================= Modern Animated Progress Bar ================= */
+
+.progress {
+    height: 10px;
+    background: #ececec;
+    border-radius: 50px;
+    overflow: hidden;
+    margin-top: 8px;
+    position: relative;
+}
+
+/* Main Bar */
+.progress-bar {
+    height: 100%;
+    width: 0;
+    border-radius: 50px;
+
+    background: linear-gradient(
+        90deg,
+        #7b4b2a,
+        #c08a5d,
+        #7b4b2a
+    );
+
+    background-size: 200% 100%;
+
+    animation: fillBar 1.8s ease forwards,
+               gradientMove 3s linear infinite,
+               pulseGlow 2s ease-in-out infinite;
+
+    box-shadow: 0 0 10px rgba(123, 75, 42, 0.4);
+}
+
+/* Fill Animation */
+@keyframes fillBar {
+    from { width: 0; }
+}
+
+/* Moving Gradient Effect */
+@keyframes gradientMove {
+    0% { background-position: 0% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Soft Glow Pulse */
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 8px rgba(123,75,42,0.4); }
+    50% { box-shadow: 0 0 18px rgba(123,75,42,0.7); }
+}
+
+/* Hover 3D Lift */
+.event-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 10px 10px 25px rgba(0,0,0,0.12),
+                -10px -10px 25px rgba(255,255,255,1);
+}
+
+/* Event Title */
+.event-card h4 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.event-card p {
+    font-size: 13px;
+    color: #777;
+}
+
+/* Badges */
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.published {
+    background: #d4f5e9;
+    color: #1c7c54;
+}
+
+.draft {
+    background: #ffe5e5;
+    color: #c0392b;
+}
+
+/* Progress Box */
+.progress-box {
+    width: 220px;
+    text-align: right;
+}
+
+.progress-box span {
+    font-size: 12px;
+}
+
+/* 3D Progress Bar */
+.progress {
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    margin-top: 6px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 8px;
+    background: linear-gradient(90deg, #7b4b2a, #c08a5d);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+/* add Evnt */
+/* add Business */
+
+.container{
+width:100%;
+margin:auto;
+padding:30px;
+}
+
+h1{
+font-size:28px;
+margin-bottom:5px;
+}
+
+.addcard{
+background:white;
+padding:25px;
+border-radius:8px;
+margin-top:20px;
+border:1px solid #e3e3e3;
+}
+
+label{
+display:block;
+margin-top:15px;
+font-weight:500;
+}
+
+input,select,textarea{
+width:100%;
+padding:10px;
+margin-top:5px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+.row{
+display:flex;
+gap:20px;
+}
+
+.row div{
+flex:1;
+}
+
+.hours{
+    display: grid;
+    grid-template-columns: 150px 180px 40px 180px;
+    gap: 15px 20px;
+    align-items: center;
+}
+.hours input{
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    width:160px;
+}
+.buttons{
+margin-top:20px;
+display:flex;
+justify-content:flex-end;
+gap:10px;
+}
+
+.draft{
+background:#eee;
+padding:10px 18px;
+border:none;
+border-radius:6px;
+}
+
+.publish{
+background:#16a34a;
+color:white;
+padding:10px 18px;
+border:none;
+border-radius:6px;
+}
+/* EVENTS */
+
+.event-card{
+display:flex;
+background:#fff;
+border-radius:14px;
+padding:18px;
+margin-bottom:25px;
+
+box-shadow:
+0 4px 6px rgba(0,0,0,0.05),
+0 10px 20px rgba(0,0,0,0.08);
+
+transition:all 0.3s ease;
+}
+
+.event-card:hover{
+transform:translateY(-6px);
+box-shadow:
+0 10px 15px rgba(0,0,0,0.08),
+0 20px 30px rgba(0,0,0,0.10);
+}
+
+
+.event-image img{
+width:220px;
+height:150px;
+object-fit:cover;
+border-radius:10px;
+}
+
+
+.event-details{
+flex:1;
+margin-left:20px;
+}
+
+
+.event-header{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+
+.event-meta{
+margin-top:6px;
+color:#666;
+font-size:14px;
+display:flex;
+gap:15px;
+}
+
+
+.event-rsvp{
+margin-top:10px;
+font-size:14px;
+}
+
+
+.progress-bar1{
+width:100%;
+height:6px;
+background:#ffffff;
+border-radius:6px;
+margin-top:8px;
+}
+
+
+.event-actions{
+margin-top:12px;
+display:flex;
+gap:10px;
+}
+
+.edit-btn{
+    padding:7px 14px;
+    border:1px solid #002310;
+    background:#fff;
+    color:#00200e;
+    border-radius:6px;
+    cursor:pointer;
+    margin-right:10px;
+}
+.edit-btn img{
+    height:13px;
+}
+.edit-btn:hover{
+    background:#18a558;
+    color:#fff;
+}
+.remove-btn{
+    padding:7px 14px;
+    border:none;
+    background:#ffe6e6;
+    color:#e53935;
+    border-radius:6px;
+    cursor:pointer;
+}
+.remove-btn img{
+    height: 14px;
+}
+.remove-btn:hover{
+    background:#e53935;
+    color:#fff;
+}
+.status{
+    font-size:12px;
+    padding:4px 10px;
+    border-radius:20px;
+    margin-left:10px;
+}
+
+.active{
+    background:#e6f7ef;
+    color:#18a558;
+}
+
+.pending{
+    background:#f0f0f0;
+    color:#666;
+}
+.rejected{
+    background:#ffe6e6;
+    color:#e53935;
+}
+
+
+/* ------- attendeeesevent.html -------- */
+
+/* Container */
+.attendees-container {
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Header */
+.attendees-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.attendees-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.attendees-header p {
+    color: #777;
+    font-size: 14px;
+}
+
+/* Buttons */
+.header-buttons {
+    margin-left: 650px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: none;
+    background: #f5f5f5;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    /* 3D Effect */
+    box-shadow: 5px 5px 12px #d1d1d1,
+                -5px -5px 12px #ffffff;
+
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Cards Layout */
+.cards {
+    display: flex;
+    gap: 20px;
+}
+
+/* Card */
+.card {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #f5f5f5;
+
+    /* Soft 3D shadow */
+    box-shadow: 8px 8px 16px #d1d1d1,
+                -8px -8px 16px #ffffff;
+
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Icon Circle */
+.icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+/* Colors */
+.green {
+    border: 2px solid #2ecc71;
+    color: #2ecc71;
+}
+
+.orange {
+    border: 2px solid #f39c12;
+    color: #f39c12;
+}
+
+.red {
+    border: 2px solid #e74c3c;
+    color: #e74c3c;
+}
+
+/* Text */
+.card h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.card p {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+}
+
+/*  search attendeesevent settingsbusiness  */
+
+/* Container */
+.table-container {
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Search Box */
+.search-box {
+    width: 350px;
+    display: flex;
+    align-items: center;
+    background: #f5f5f5;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+
+    box-shadow: 5px 5px 12px #d1d1d1,
+                -5px -5px 12px #ffffff;
+}
+
+.search-box i {
+    color: #777;
+    margin-right: 10px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+}
+
+/* Table */
+.attendees-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f5f5f5;
+    border-radius: 12px;
+    overflow: hidden;
+
+    box-shadow: 8px 8px 16px #d1d1d1,
+                -8px -8px 16px #ffffff;
+}
+
+.attendees-table th {
+    text-align: left;
+    padding: 15px;
+    background: #eaeaea;
+    font-weight: 600;
+}
+
+.attendees-table td {
+    padding: 15px;
+    border-top: 1px solid #ddd;
+}
+
+/* Name + Avatar */
+.name-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #dfe6e9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #2d3436;
+}
+
+/* Badges */
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.confirmed {
+    background: #d4edda;
+    color: #2ecc71;
+}
+
+.pending {
+    background: #fff3cd;
+    color: #f39c12;
+}
+
+.cancelled {
+    background: #f8d7da;
+    color: #e74c3c;
+}
+
+/* Actions */
+.actions a {
+    margin-right: 10px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.approve {
+    color: #2ecc71;
+}
+
+.remove {
+    color: #e74c3c;
+}
+
+/* 
+--------  analyticsbusiness.html -------- */
+
+/* ---- filters and days ----- */
+/* Position filters at top-right */
+.filters {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    margin-right: 100px;
+    margin-top: 50px;
+}
+
+/* Buttons */
+.filters button {
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.3s;
+}
+
+/* Hover effect */
+.filters button:hover {
+    background: #f5f5f5;
+}
+
+.dashboard-cards {
+    display: flex;
+    gap: 20px;
+    width: 225%;
+}
+
+/* Card */
+.dashboard-card {
+    flex: 1; /* equal width for all cards */
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    position: relative;
+    transition: 0.3s ease;
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+}
+
+/* Header */
+.dashboard-card-header {
+    display: flex;
+    align-items: center;
+}
+
+/* Icon */
+.dashboard-card-icon {
+    width: 40px;
+    height: 40px;
+    background: #e6f7f5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard-card-icon i {
+    font-size: 18px;
+    color: #1abc9c;
+}
+
+/* Icon color variations */
+.dashboard-card-icon.views i {
+    color: #3498db;
+}
+
+.dashboard-card-icon.comments i {
+    color: #f39c12;
+}
+
+.dashboard-card-icon.attendance i {
+    color: #9b59b6;
+}
+
+/* Badge (top-right) */
+.dashboard-card-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.dashboard-card-badge.up {
+    background: #e6f7ec;
+    color: #1a9c5c;
+}
+
+.dashboard-card-badge.down {
+    background: #fdecea;
+    color: #d93025;
+}
+
+/* Number */
+.dashboard-card h2 {
+    margin-top: 5px;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom:5%;
+}
+
+/* Bottom text */
+.dashboard-card p {
+    position: absolute;
+    bottom: 15px;
+    left: 20px;
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+}
+/* Active button */
+.filters button.active {
+    background: #2ecc71;
+    color: #fff;
+    border-color: #2ecc71;
+}
+
+
+
+/* ---- charts ---- */
+
+/* Card */
+.analytics-card {
+    width: 225%;
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 20px;
+    margin-left: 15px;
+    margin-top: 20px;
+}
+
+/* Title */
+.analytics-card h3 {
+    margin: 0 0 30px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #222;
+}
+
+/* Chart container */
+.chart-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 200px;
+}
+
+/* Each item */
+.chart-item {
+    text-align: center;
+    flex: 1;
+}
+
+/* Simple bar */
+.chart-item::before {
+    content: "";
+    width: 20px;
+    height: 80px; /* adjust if needed */
+    background: #2ecc71;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+/* Value */
+.chart-item .value {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+/* Label */
+.chart-item .label {
+    font-size: 13px;
+    color: #666;
+}
+
+/* 
+----- event performance ----- */
+
+/* Wrapper */
+.ep-wrapper {
+    background: #fFFFFF;
+    padding: 20px;
+    border-radius: 12px;
+    width: 225%;
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
+/* Title */
+.ep-title {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Each item */
+.ep-item {
+    display: flex;
+    align-items: center;
+    background: #eaeaea;
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    transition: 0.3s;
+}
+
+/* Hover effect */
+.ep-item:hover {
+    background: #e0e0e0;
+}
+
+/* Icon */
+.ep-icon {
+    width: 45px;
+    height: 45px;
+    background: #d6f5e8;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.ep-icon i {
+    color: #2ecc71;
+    font-size: 18px;
+}
+
+/* Content */
+.ep-content h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.ep-content p {
+    margin: 5px 0 0;
+    font-size: 13px;
+    color: #555;
+}
+
+
+
+
+
+
+
+/* -------- settingsevent.html -------- */
+
+/* Background gradient */
+
+/* Glass container */
+.glass-container {
+    width: 70%;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 20px;
+
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    color: #000000;
+}
+
+/* Title */
+.form-title {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Input box */
+.input-box {
+    position: relative;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+/* Input box label */
+.input-box {
+    display: flex;
+    flex-direction: column;   /* label ऊपर, input नीचे */
+    margin-bottom: 20px;
+}
+
+.input-box label {
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.input-box input,
+.input-box textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    outline: 1px solid #9b9a9a;
+}
+
+
+/* Input fields */
+.input-box input,
+.input-box textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    outline: 1px solid #9b9a9a;
+
+    background: rgba(222, 222, 222, 0);
+    color: #000000;
+}
+
+/* Animation */
+.input-box input:not(:placeholder-shown) + label,
+.input-box textarea:focus + label,
+
+/* Row */
+.row {
+    display: flex;
+    gap: 15px;
+}
+
+.row .input-box {
+    flex: 1;        /* ✅ equal width */
+    width: 100%;    /* ✅ prevents shrinking issue */
+}
+
+/* Gender */
+.gender-box {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* Button */
+.btn-glow {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(45deg,  #4B0F12);
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+
+    box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    transition: 0.3s;
+}
+
+.btn-glow:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255,255,255,0.8);
+}
+
+
+/* 
+neww css */
+
+/* Form group */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Label */
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+/* Input field */
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #dcdcdc;
+
+    background-color: #f7f7f7;
+    font-size: 14px;
+    color: #333;
+
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* Focus effect */
+.form-group input:focus,
+.form-group textarea:focus {
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+}

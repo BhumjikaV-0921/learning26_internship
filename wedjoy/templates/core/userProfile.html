@@ -1,0 +1,174 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}My Profile - WedJoy{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Profile Card -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        {% if user.profileImage %}
+                            <img src="{{ user.profileImage.url }}" alt="Profile Image" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
+                        {% else %}
+                            <img src="{% static 'images/default.png' %}" alt="Default Avatar" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
+                        {% endif %}
+                    </div>
+
+                    <h4>{{ user.firstName|default:"" }} {{ user.lastName|default:"" }}</h4>
+                    <p class="text-muted">{{ user.email }}</p>
+
+                    <div class="mb-3">
+                        <p><strong>Role:</strong> {{ user.get_role_display }}</p>
+                        {% if user.phone_number %}
+                            <p><strong>Phone:</strong> {{ user.phone_number }}</p>
+                        {% endif %}
+                        {% if user.address %}
+                            <p><strong>Address:</strong> {{ user.address }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'userupdateprofile' %}" class="btn btn-primary">Edit Profile</a>
+                        <a href="{% url 'accounts:change_password' %}" class="btn btn-outline-primary">Change Password</a>
+                        <a href="{% url 'accounts:send_otp' %}" class="btn btn-outline-secondary">Security Settings</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Content -->
+        <div class="col-md-8">
+            <!-- Navigation Tabs -->
+            <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="posts-tab" data-bs-toggle="tab" data-bs-target="#posts" type="button" role="tab">My Posts</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab">My Comments</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="events-tab" data-bs-toggle="tab" data-bs-target="#events" type="button" role="tab">Registered Events</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="payments-tab" data-bs-toggle="tab" data-bs-target="#payments" type="button" role="tab">Payment History</button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content mt-3" id="profileTabsContent">
+                <!-- Posts Tab -->
+                <div class="tab-pane fade show active" id="posts" role="tabpanel">
+                    <h5>My Posts</h5>
+                    {% for post in user_posts %}
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">{{ post.created_at|date:"M d, Y H:i" }}</small>
+                                    <a href="{% url 'community:feed' %}#post-{{ post.id }}" class="btn btn-sm btn-outline-primary">View</a>
+                                </div>
+                                <p class="mt-2">{{ post.content|truncatechars:200 }}</p>
+                                {% if post.image %}
+                                    <img src="{{ post.image.url }}" class="img-fluid rounded" style="max-height: 200px;" alt="Post image">
+                                {% endif %}
+                                <div class="mt-2">
+                                    <small class="text-muted">{{ post.total_comments }} comment{{ post.total_comments|pluralize }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="alert alert-info">You haven't created any posts yet. <a href="{% url 'community:feed' %}">Create your first post</a>!</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Comments Tab -->
+                <div class="tab-pane fade" id="comments" role="tabpanel">
+                    <h5>My Comments</h5>
+                    {% for comment in user_comments %}
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">On: {{ comment.post.content|truncatechars:50 }}</small>
+                                    <small class="text-muted">{{ comment.created_at|date:"M d, Y H:i" }}</small>
+                                </div>
+                                <p class="mt-1 mb-0">{{ comment.content }}</p>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="alert alert-info">You haven't commented on any posts yet.</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Events Tab -->
+                <div class="tab-pane fade" id="events" role="tabpanel">
+                    <h5>Registered Events</h5>
+                    {% for registration in user_registrations %}
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h6>{{ registration.event.title }}</h6>
+                                        <p class="mb-1"><strong>Date:</strong> {{ registration.event.event_date }}</p>
+                                        <p class="mb-1"><strong>Time:</strong> {{ registration.event.start_time }} - {{ registration.event.end_time }}</p>
+                                        <p class="mb-1"><strong>Location:</strong> {{ registration.event.location_name }}</p>
+                                    </div>
+                                    <div class="col-md-4 text-end">
+                                        <span class="badge
+                                            {% if registration.status == 'registered' %}bg-success
+                                            {% elif registration.status == 'attended' %}bg-primary
+                                            {% else %}bg-secondary{% endif %}">
+                                            {{ registration.get_status_display }}
+                                        </span>
+                                        {% if registration.payment_status == 'paid' %}
+                                            <p class="mb-0 mt-2"><strong>Paid:</strong> ₹{{ registration.amount }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="alert alert-info">You haven't registered for any events yet. <a href="{% url 'showEvents' %}">Browse events</a>!</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Payments Tab -->
+                <div class="tab-pane fade" id="payments" role="tabpanel">
+                    <h5>Payment History</h5>
+                    {% for payment in user_payments %}
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Amount:</strong> ₹{{ payment.amount }}</p>
+                                        <p class="mb-1"><strong>Date:</strong> {{ payment.created_at|date:"M d, Y H:i" }}</p>
+                                        {% if payment.event_registration %}
+                                            <p class="mb-0"><strong>Event:</strong> {{ payment.event_registration.event.title|truncatechars:30 }}</p>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-6 text-end">
+                                        <span class="badge
+                                            {% if payment.payment_status == 'completed' %}bg-success
+                                            {% elif payment.payment_status == 'pending' %}bg-warning
+                                            {% elif payment.payment_status == 'failed' %}bg-danger
+                                            {% else %}bg-secondary{% endif %}">
+                                            {{ payment.get_payment_status_display }}
+                                        </span>
+                                        {% if payment.razorpay_payment_id %}
+                                            <p class="mb-0 mt-1 small text-muted">ID: {{ payment.razorpay_payment_id }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="alert alert-info">No payment history found.</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

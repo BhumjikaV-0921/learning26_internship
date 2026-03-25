@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Listings - Wedjoy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #4B0F12 0%, #875852 100%);
+            color: white;
+            padding: 100px 8%;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .hero-section p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .content-section {
+            padding: 80px 8%;
+            background: #f8f9fa;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 60px;
+            font-weight: 600;
+        }
+        .job-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .job-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 6px 20px rgba(75, 15, 18, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid #4B0F12;
+        }
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(75, 15, 18, 0.15);
+        }
+        .job-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .job-company {
+            color: #4B0F12;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        .job-location {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .job-location i {
+            margin-right: 8px;
+        }
+        .apply-btn {
+            background: #4B0F12;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        .apply-btn:hover {
+            background: #875852;
+        }
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            .hero-section p {
+                font-size: 1.1rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .job-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1>Job Listings</h1>
+        <p>Discover your next career opportunity. Browse through curated job listings from top companies worldwide.</p>
+    </section>
+
+    <!-- Job Listings Section -->
+    <section class="content-section">
+        <h2 class="section-title">Featured Opportunities</h2>
+        <div class="job-cards">
+            <div class="job-card">
+                <h3 class="job-title">Senior Software Engineer</h3>
+                <p class="job-company">TechCorp Inc.</p>
+                <p class="job-location"><i class="fas fa-map-marker-alt"></i> San Francisco, CA</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            <div class="job-card">
+                <h3 class="job-title">Product Manager</h3>
+                <p class="job-company">Innovate Solutions</p>
+                <p class="job-location"><i class="fas fa-map-marker-alt"></i> New York, NY</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            <div class="job-card">
+                <h3 class="job-title">UX Designer</h3>
+                <p class="job-company">Creative Agency</p>
+                <p class="job-location"><i class="fas fa-map-marker-alt"></i> Remote</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            <div class="job-card">
+                <h3 class="job-title">Data Analyst</h3>
+                <p class="job-company">DataTech</p>
+                <p class="job-location"><i class="fas fa-map-marker-alt"></i> Austin, TX</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            <div class="job-card">
+                <h3 class="job-title">Marketing Specialist</h3>
+                <p class="job-company">BrandBoost</p>
+                <p class="job-location"><i class="fas fa-map-marker-alt"></i> Chicago, IL</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            <div class="job-card">
+                <h3 class="job-title">DevOps Engineer</h3>
+                <p class="job-company">CloudSys</p>
+                <p class="job-location"><i class="fas fa-map-marker-alt"></i> Seattle, WA</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
+{% endblock %}

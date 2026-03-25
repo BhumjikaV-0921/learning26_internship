@@ -1,0 +1,77 @@
+{% load static %}
+<nav class="navbar" id="navbar">
+   <!-- LOGO IMAGE -->
+  <div class="logo">
+      <img  id="navLogo" src="{% static 'images/logo.png' %}" alt="LinkUp Logo">
+  </div>
+
+
+  <ul class="nav-links">
+    <li><a href="{% url 'showEvents' %}">Events</a></li>
+    <li><a href="{% url 'showbusiness' %}">Businesses</a></li>
+    <li><a href="{% url 'showvolunteers' %}">Volunteer</a></li>
+    {% if user.is_authenticated %}
+    <li><a href="{% url 'community:feed' %}">Community</a></li>
+    {% else %}
+    <li><a href="{% url 'login' %}">Community</a></li>
+{% endif %}
+    <li>
+      <a href="{% url 'aboutus' %}">About Us</a>
+    </li>
+  </ul>
+ <div class="nav-buttons">
+
+{% if user.is_authenticated %}
+
+<div class="user-menu">
+    <a href="{% url 'usercomments' %}"><img src="{{ user.profileImage.url }}" alt="profile" class="profile-img" id="profileBtn"></a>
+</div>
+
+{% else %}
+
+<a href="{% url 'login' %}" class="btn-login">Login</a>
+<a href="#" class="btn-signup">Join Now</a>
+
+{% endif %}
+
+</div>
+
+  
+</nav>
+
+
+<script>
+window.addEventListener("scroll", function() {
+
+  const navbar = document.getElementById("navbar");
+  const logo = document.getElementById("navLogo");
+
+  if (window.scrollY > 50) {
+    navbar.classList.add("scrolled");
+    logo.src = "{% static 'images/logo1.png' %}";
+  } else {
+    navbar.classList.remove("scrolled");
+    logo.src = "{% static 'images/logo.png' %}";
+  }
+
+});
+
+const profileBtn = document.getElementById("profileBtn");
+const dropdownMenu = document.getElementById("dropdownMenu");
+
+if(profileBtn){
+profileBtn.onclick = function(){
+    dropdownMenu.classList.toggle("active");
+}
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('#profileBtn')) {
+    if (dropdownMenu) {
+      dropdownMenu.classList.remove("active");
+    }
+  }
+}
+
+</script>
+

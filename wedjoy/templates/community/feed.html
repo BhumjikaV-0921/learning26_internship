@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Community Feed - WedJoy{% endblock %}
+
+{% block content %}
+<!-- HERO -->
+<section class="about-hero">
+    <div class="overlay"></div>
+    <div class="hero-inner container">
+        <h1 style="color:#ffd3ac;font-size: 3rem; margin:0;">Community</h1>
+        <p class="hero-subtext" id="hero-text">
+            Discover inspiring events, support local businesses, and make a difference
+            through meaningful volunteer opportunities.
+        </p>
+        <nav class="breadcrumb">
+            <a href="{% url 'home' %}">Home</a> ‹ <span>About us</span>
+        </nav>
+    </div>
+</section>
+<!-- Community Feed Container -->
+<div style="max-width: 800px; margin: 80px auto; padding: 0 20px; font-family: 'Inter', sans-serif;">
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h1 style="font-size: 2.5rem; font-weight: 700; color: #002d28; margin-bottom: 10px; font-family: 'Times New Roman', Times, serif;">Community Feed</h1>
+        <p style="font-size: 1.1rem; color: #666; margin: 0;">Share your thoughts and connect with others</p>
+    </div>
+
+    <!-- Create Post Form -->
+    <div style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border-radius: 20px; padding: 30px; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); border: 1px solid #e9ecef;">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div style="margin-bottom: 20px;">
+                <textarea name="content" placeholder="What's on your mind?" required style="width: 100%; padding: 15px; border: 2px solid #e9ecef; border-radius: 12px; font-size: 1rem; font-family: inherit; resize: vertical; min-height: 100px; transition: all 0.3s ease; background: #fff;"></textarea>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label for="id_image" style="display: block; font-weight: 600; color: #002d28; margin-bottom: 8px; font-size: 0.95rem;">Add Image (optional)</label>
+                <input type="file" name="image" id="id_image" accept="image/*" style="width: 100%; padding: 10px; border: 2px solid #e9ecef; border-radius: 12px; background: #fff; cursor: pointer;">
+            </div>
+            <button type="submit" name="post_content" style="background: linear-gradient(135deg, #002d28 0%, #004d40 100%); color: white; border: none; padding: 15px 30px; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 45, 40, 0.3);">Share Post</button>
+        </form>
+    </div>
+
+    <!-- Posts Feed -->
+    {% for post in posts %}
+        <div style="background: #ffffff; border-radius: 20px; padding: 25px; margin-bottom: 30px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); border: 1px solid #f1f3f4; transition: all 0.3s ease;">
+            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #002d28 0%, #004d40 100%); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem;">{{ post.user.firstName|default:post.user.email|slice:":1"|upper }}</div>
+                    <div>
+                        <h4 style="margin: 0; font-size: 1.1rem; color: #002d28; font-weight: 600;">{{ post.user.firstName|default:post.user.email }}</h4>
+                        <span style="color: #666; font-size: 0.9rem; margin: 0;">{{ post.created_at|timesince }} ago</span>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <p style="font-size: 1rem; line-height: 1.6; color: #333; margin: 0;">{{ post.content|linebreaks }}</p>
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="Post image" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 12px; margin-top: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+                {% endif %}
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 1px solid #e9ecef;">
+                <span style="color: #666; font-size: 0.9rem; font-weight: 500;">{{ post.total_comments }} comment{{ post.total_comments|pluralize }}</span>
+            </div>
+
+            <!-- Comments Section -->
+            <div style="margin-top: 20px;">
+                {% for comment in post.comments.all|slice:":3" %}
+                    <div style="display: flex; gap: 15px; margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #002d28;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #875852 0%, #a0695a 100%); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; flex-shrink: 0;">{{ comment.user.firstName|default:comment.user.email|slice:":1"|upper }}</div>
+                        <div style="flex: 1;">
+                            <strong style="display: block; color: #002d28; font-weight: 600; margin-bottom: 5px;">{{ comment.user.firstName|default:comment.user.email }}</strong>
+                            <p style="margin: 0; color: #555; line-height: 1.4;">{{ comment.content }}</p>
+                            <span style="font-size: 0.8rem; color: #999; margin-top: 5px;">{{ comment.created_at|timesince }} ago</span>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% if post.comments.count > 3 %}
+                    <button style="background: transparent; border: 2px solid #002d28; color: #002d28; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s ease; margin-top: 10px;">View all {{ post.comments.count }} comments</button>
+                {% endif %}
+            </div>
+
+            <!-- Add Comment Form -->
+            <form data-post-id="{{ post.id }}" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e9ecef;">
+                {% csrf_token %}
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="text" placeholder="Write a comment..." maxlength="200" required style="flex: 1; padding: 12px 15px; border: 2px solid #e9ecef; border-radius: 25px; font-size: 0.95rem; outline: none; transition: all 0.3s ease; background: #fff;">
+                    <button type="submit" style="background: linear-gradient(135deg, #875852 0%, #a0695a 100%); color: white; border: none; padding: 12px 20px; border-radius: 25px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 3px 10px rgba(135, 88, 82, 0.3);">Comment</button>
+                </div>
+            </form>
+        </div>
+    {% empty %}
+        <div style="text-align: center; padding: 60px 20px; background: #ffffff; border-radius: 20px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);">
+            <h3 style="color: #002d28; font-size: 1.5rem; margin-bottom: 10px;">No posts yet</h3>
+            <p style="color: #666; font-size: 1rem; margin: 0;">Be the first to share something!</p>
+        </div>
+    {% endfor %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle comment forms
+    document.querySelectorAll('form[data-post-id]').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const postId = this.dataset.postId;
+            const commentInput = this.querySelector('input[type="text"]');
+            const content = commentInput.value.trim();
+
+            if (!content) return;
+
+            fetch(`/community/post/${postId}/comment/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: `content=${encodeURIComponent(content)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Add new comment to the DOM
+                    const commentsSection = form.previousElementSibling;
+                    const newComment = document.createElement('div');
+                    newComment.style.cssText = 'display: flex; gap: 15px; margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #002d28;';
+                    newComment.innerHTML = `
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #875852 0%, #a0695a 100%); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; flex-shrink: 0;">${data.comment.user.charAt(0).toUpperCase()}</div>
+                        <div style="flex: 1;">
+                            <strong style="display: block; color: #002d28; font-weight: 600; margin-bottom: 5px;">${data.comment.user}</strong>
+                            <p style="margin: 0; color: #555; line-height: 1.4;">${data.comment.content}</p>
+                            <span style="font-size: 0.8rem; color: #999; margin-top: 5px;">just now</span>
+                        </div>
+                    `;
+                    commentsSection.insertBefore(newComment, commentsSection.lastElementChild);
+                    commentInput.value = '';
+                }
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

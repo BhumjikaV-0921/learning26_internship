@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Receipt & Ticket - {{ event.title }}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #002d28 0%, #004d40 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 30px;
+        }
+        .receipt-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .receipt-section h2 {
+            color: #002d28;
+            margin-top: 0;
+            font-size: 18px;
+            border-bottom: 2px solid #002d28;
+            padding-bottom: 10px;
+        }
+        .receipt-details {
+            display: table;
+            width: 100%;
+            margin: 15px 0;
+        }
+        .receipt-row {
+            display: table-row;
+        }
+        .receipt-row div {
+            display: table-cell;
+            padding: 8px 0;
+        }
+        .receipt-label {
+            font-weight: bold;
+            width: 40%;
+            color: #666;
+        }
+        .receipt-value {
+            color: #333;
+        }
+        .ticket {
+            border: 3px solid #002d28;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .ticket::before {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: #f4f4f4;
+            border-radius: 50%;
+            border: 3px solid #002d28;
+        }
+        .ticket::after {
+            content: '';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: #f4f4f4;
+            border-radius: 50%;
+            border: 3px solid #002d28;
+        }
+        .ticket-header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .ticket-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #002d28;
+            margin: 0;
+        }
+        .ticket-subtitle {
+            color: #666;
+            margin: 5px 0;
+        }
+        .ticket-details {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            position: relative;
+            z-index: 1;
+        }
+        .ticket-info {
+            flex: 1;
+        }
+        .ticket-info h3 {
+            margin: 0 0 10px 0;
+            color: #002d28;
+            font-size: 16px;
+        }
+        .ticket-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .qr-section {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+            z-index: 1;
+        }
+        .qr-code {
+            max-width: 120px;
+            height: auto;
+            border: 2px solid #002d28;
+            border-radius: 8px;
+        }
+        .ticket-footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed #002d28;
+            position: relative;
+            z-index: 1;
+        }
+        .ticket-id {
+            font-family: monospace;
+            font-size: 14px;
+            color: #666;
+            background: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        .highlight {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4caf50;
+            margin: 20px 0;
+        }
+        .highlight h3 {
+            margin: 0 0 10px 0;
+            color: #2e7d32;
+        }
+        .warning {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff9800;
+            margin: 20px 0;
+        }
+        .warning h3 {
+            margin: 0 0 10px 0;
+            color: #e65100;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #002d28;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+        }
+        .btn:hover {
+            background: #004d40;
+        }
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+            }
+            .header, .content {
+                padding: 20px;
+            }
+            .ticket-details {
+                flex-direction: column;
+            }
+            .ticket-info {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 Payment Successful!</h1>
+            <p>Your booking for {{ event.title }} is confirmed</p>
+        </div>
+
+        <div class="content">
+            <div class="highlight">
+                <h3>✅ Payment Confirmed</h3>
+                <p>Thank you for your payment! Your transaction has been successfully processed and your event booking is confirmed.</p>
+            </div>
+
+            <div class="receipt-section">
+                <h2>📄 Payment Receipt</h2>
+                <div class="receipt-details">
+                    <div class="receipt-row">
+                        <div class="receipt-label">Transaction ID:</div>
+                        <div class="receipt-value">{{ transaction_id }}</div>
+                    </div>
+                    <div class="receipt-row">
+                        <div class="receipt-label">Payment Method:</div>
+                        <div class="receipt-value">{{ payment_method }}</div>
+                    </div>
+                    <div class="receipt-row">
+                        <div class="receipt-label">Amount Paid:</div>
+                        <div class="receipt-value">₹{{ amount }}</div>
+                    </div>
+                    <div class="receipt-row">
+                        <div class="receipt-label">Payment Date:</div>
+                        <div class="receipt-value">{{ payment_date|date:"F j, Y, g:i A" }}</div>
+                    </div>
+                    <div class="receipt-row">
+                        <div class="receipt-label">Customer Email:</div>
+                        <div class="receipt-value">{{ user.email }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ticket">
+                <div class="ticket-header">
+                    <h2 class="ticket-title">{{ event.title }}</h2>
+                    <p class="ticket-subtitle">Event Ticket</p>
+                </div>
+
+                <div class="ticket-details">
+                    <div class="ticket-info">
+                        <h3>📅 Event Details</h3>
+                        <p><strong>Date:</strong> {{ event.date|date:"F j, Y" }}</p>
+                        <p><strong>Time:</strong> {{ event.time|time:"g:i A" }}</p>
+                        <p><strong>Venue:</strong> {{ event.venue }}</p>
+                        <p><strong>Organizer:</strong> {{ event.organizer }}</p>
+                    </div>
+
+                    <div class="qr-section">
+                        <img src="{{ qr_code_url }}" alt="Ticket QR Code" class="qr-code">
+                        <p style="font-size: 12px; color: #666; margin: 5px 0;">Scan for entry</p>
+                    </div>
+                </div>
+
+                <div class="ticket-footer">
+                    <div class="ticket-id">Ticket ID: {{ ticket_id }}</div>
+                    <p style="margin: 10px 0; font-size: 12px; color: #666;">
+                        Please bring this ticket (digital or printed) to the event
+                    </p>
+                </div>
+            </div>
+
+            <div class="warning">
+                <h3>📋 Important Information</h3>
+                <ul style="margin: 0; padding-left: 20px;">
+                    <li>Please arrive at least 30 minutes before the event starts</li>
+                    <li>Bring a valid ID proof along with this ticket</li>
+                    <li>This ticket is non-transferable and valid for one person only</li>
+                    <li>For any queries, contact us at support@wedjoy.com</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="#" class="btn">Download Ticket</a>
+                <a href="#" class="btn">Add to Calendar</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>WedJoy Events</strong></p>
+            <p>This is an automated email. Please do not reply to this message.</p>
+            <p>For support, contact us at support@wedjoy.com | +91-XXXXXXXXXX</p>
+            <p>&copy; 2024 WedJoy. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

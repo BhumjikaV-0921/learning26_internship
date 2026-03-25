@@ -1,0 +1,137 @@
+{% include "adminpanel/base.html" %}
+{% block content %}
+{% load static %}
+<div style="margin-top:-40%;margin-left:18%;overflow:hidden">
+
+<!-- 🔷 TOP CARDS -->
+<div class="cards">
+
+    <div class="card">
+        <h3>Total Businesses</h3>
+        <h2>{{ total_businesses }}</h2>
+         <div> <img src="{% static 'images/conecction.png' %}" style="width:15%"> </div>
+
+    </div>
+
+    <div class="card">
+        <h3>Verified</h3>
+        <h2>{{ approved_businesses }}</h2>
+         <div> <img src="{% static 'images/check-circle.png' %}" style="width:15%"> </div>
+
+
+    </div>
+
+    <div class="card">
+        <h3>Pending</h3>
+        <h2>{{ pending_businesses }}</h2>
+         <div> <img src="{% static 'images/session-time.png' %}" style="width:15%"> </div>
+
+    </div>
+
+    <div class="card">
+        <h3>Avg Rating</h3>
+        <h2>{{ avg_rating }}</h2>
+         <div> <img src="{% static 'images/conecction.png' %}" style="width:15%"> </div>
+
+    </div>
+
+</div>
+
+<!-- 🔍 SEARCH + FILTER -->
+<form method="GET" class="toolbar">
+
+    <input type="text" name="q" placeholder="Search businesses..." value="{{ request.GET.q }}">
+
+    <select name="category">
+        <option value="all">All Categories</option>
+        {% for cat in categories %}
+            <option value="{{ cat }}">{{ cat }}</option>
+        {% endfor %}
+    </select>
+
+    <select name="status">
+        <option value="all">All Status</option>
+        <option value="approved">Verified</option>
+        <option value="pending">Pending</option>
+        <option value="rejected">Suspended</option>
+    </select>
+
+    <button type="submit">Filter</button>
+
+</form>
+
+<!-- 📋 TABLE -->
+<div class="table-container">
+<table>
+
+<thead>
+<tr>
+    <th>Business</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Rating</th>
+    <th>Status</th>
+    <th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+{% for business in businesses %}
+<tr>
+
+<td>
+    <div class="user">
+        <div class="avatar">
+            <img src="{{ business.photo.url }}" class="avatar">
+        </div>
+        <div>
+            <strong>{{ business.business_name }}</strong><br>
+            <small>{{ business.contact_number }}</small>
+        </div>
+    </div>
+</td>
+
+<td>
+    <span class="badge gray">{{ business.category }}</span>
+</td>
+
+<td>{{ business.city }}</td>
+
+<td>
+    ⭐ {{ business.rating|default:"4.5" }}
+</td>
+
+<td>
+    {% if business.approval_status == "approved" %}
+        <span class="badge green">Verified</span>
+    {% elif business.approval_status == "pending" %}
+        <span class="badge gray">Pending</span>
+    {% else %}
+        <span class="badge red">Suspended</span>
+    {% endif %}
+</td>
+
+<td class="actions">
+
+    {% if business.approval_status == "pending" %}
+        <a href="{% url 'adminpanel:approve_business' business.id %}" class="btn green">Approve</a>
+        <a href="{% url 'adminpanel:reject_business' business.id %}" class="btn red">Reject</a>
+    {% endif %}
+
+    <a href="{% url 'adminpanel:delete_business' business.id %}" 
+       class="btn gray"
+       onclick="return confirm('Delete this business?')">
+       Delete
+    </a>
+
+</td>
+
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+</div>
+
+</div>
+{% endblock %}

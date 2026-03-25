@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        body {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+body.fade-out {
+    opacity: 0;
+}
+
+/* optional smooth fade-in when page loads */
+body {
+    animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+    </style>
+</head>
+<body class="signup-body">
+
+<div class="overlay" >
+    <div style="margin-top:3%;margin-left:12%" class="form-container">
+
+        <h2 class="form-title">Create Account</h2>
+        <p class="form-subtitle">Sign up to join our creative network</p>
+    <img src="{% static 'images/logo1.png' %}" style="position:absolute;width:10%;margin-top:-12%;algin-item:center;margin-left:17%">
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-grid">
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                        </label>
+
+                        {{ field }}
+
+                        {% if field.errors %}
+                            <small class="error">
+                                {{ field.errors|striptags }}
+                            </small>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Create Account
+            </button>
+
+            <p class="login-link">
+                Already have an account?
+                <a href="{% url 'login' %}"  id="loginLink">Login</a>
+            </p>
+        </form>
+
+    </div>
+    <div class="right-half-grid">
+    <img src="{% static 'images/login.jpg' %}" style="position:absolute;height:89%;margin-top:-43%;margin-left:60%;border-radius:10px;border-bottom-left-radius:200px ;border-top-left-radius:200px ;">
+    </div>
+</div>
+
+<script>
+document.getElementById("loginLink").addEventListener("click", function(e) {
+    e.preventDefault();  // stop instant redirect
+    
+    document.body.classList.add("fade-out");
+
+    setTimeout(() => {
+        window.location.href = this.href;
+    }, 500); // match CSS transition time
+});
+</script>
+
+</body>
+</html>
+

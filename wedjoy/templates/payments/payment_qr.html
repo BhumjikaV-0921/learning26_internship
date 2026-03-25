@@ -1,0 +1,295 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Payment - {{ event.title }}{% endblock %}
+
+{% block content %}
+<style>
+.payment-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.payment-header {
+    margin-bottom: 30px;
+}
+
+.payment-header h1 {
+    color: #002d28;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.payment-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.qr-section {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    margin: 30px 0;
+}
+
+.qr-code {
+    max-width: 300px;
+    height: auto;
+    margin: 20px auto;
+    display: block;
+    border: 8px solid #f8f9fa;
+    border-radius: 15px;
+}
+
+.amount-display {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #002d28;
+    margin: 20px 0;
+}
+
+.transaction-id {
+    background: #f8f9fa;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-family: monospace;
+    color: #666;
+    display: inline-block;
+    margin: 15px 0;
+}
+
+.instructions {
+    background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    border-left: 4px solid #4caf50;
+}
+
+.instructions h3 {
+    color: #2e7d32;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.instructions ol {
+    text-align: left;
+    padding-left: 20px;
+}
+
+.instructions li {
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.payment-status {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 12px;
+    display: none;
+}
+
+.success {
+    background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+    border: 1px solid #4caf50;
+}
+
+.error {
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+    border: 1px solid #f44336;
+}
+
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    margin: 10px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #002d28 0%, #004d40 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 45, 40, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 45, 40, 0.4);
+}
+
+.btn-secondary {
+    background: #f8f9fa;
+    color: #002d28;
+    border: 2px solid #002d28;
+}
+
+.btn-secondary:hover {
+    background: #002d28;
+    color: white;
+}
+
+.upi-apps {
+    margin-top: 20px;
+}
+
+.upi-apps h4 {
+    color: #002d28;
+    margin-bottom: 15px;
+}
+
+.app-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.app-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #666;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.qr-code {
+    animation: pulse 2s infinite;
+}
+</style>
+
+<div class="payment-container">
+    <div class="payment-header">
+        <h1>Complete Your Payment</h1>
+        <p>Scan the QR code below to pay for {{ event.title }}</p>
+    </div>
+
+    <div class="qr-section">
+        <div class="amount-display">₹{{ amount }}</div>
+
+        <img src="{{ qr_code_url }}" alt="Payment QR Code" class="qr-code">
+
+        <div class="transaction-id">
+            Transaction ID: {{ transaction_id }}
+        </div>
+
+        <div class="upi-apps">
+            <h4>Pay using any UPI app:</h4>
+            <div class="app-icons">
+                <div class="app-icon">📱</div>
+                <div class="app-icon">💰</div>
+                <div class="app-icon">🏦</div>
+                <div class="app-icon">📲</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="instructions">
+        <h3>📱 How to Pay:</h3>
+        <ol>
+            <li>Open any UPI app (Google Pay, PhonePe, Paytm, etc.)</li>
+            <li>Scan the QR code above</li>
+            <li>Verify the amount and complete the payment</li>
+            <li>You'll receive a confirmation email with your ticket</li>
+        </ol>
+    </div>
+
+    <div class="payment-actions">
+        <button onclick="checkPaymentStatus()" class="btn btn-primary" id="check-status-btn">
+            I've Completed Payment
+        </button>
+        <a href="{% url 'events' event.id %}" class="btn btn-secondary">Cancel</a>
+    </div>
+
+    <div id="payment-status" class="payment-status"></div>
+</div>
+
+<script>
+function checkPaymentStatus() {
+    const btn = document.getElementById('check-status-btn');
+    const statusDiv = document.getElementById('payment-status');
+
+    btn.textContent = 'Checking...';
+    btn.disabled = true;
+
+    fetch("{% url 'payments:payment_success' %}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: JSON.stringify({
+            transaction_id: "{{ transaction_id }}",
+            event_id: {{ event.id }},
+            payment_method: "UPI"
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        statusDiv.style.display = 'block';
+
+        if(data.status === 'success') {
+            statusDiv.className = 'payment-status success';
+            statusDiv.innerHTML = `
+                <h3>✅ Payment Successful!</h3>
+                <p>${data.message}</p>
+                <p>You will be redirected shortly...</p>
+            `;
+            setTimeout(() => {
+                window.location.href = "{% url 'events' event.id %}";
+            }, 3000);
+        } else {
+            statusDiv.className = 'payment-status error';
+            statusDiv.innerHTML = `
+                <h3>❌ Payment Verification Failed</h3>
+                <p>${data.message}</p>
+                <p>Please try again or contact support.</p>
+            `;
+            btn.textContent = "I've Completed Payment";
+            btn.disabled = false;
+        }
+    })
+    .catch(error => {
+        statusDiv.style.display = 'block';
+        statusDiv.className = 'payment-status error';
+        statusDiv.innerHTML = `
+            <h3>❌ Error</h3>
+            <p>Unable to verify payment. Please try again.</p>
+        `;
+        btn.textContent = "I've Completed Payment";
+        btn.disabled = false;
+    });
+}
+
+// Auto-check payment status every 10 seconds
+setInterval(() => {
+    if(document.getElementById('check-status-btn').disabled === false) {
+        // Only auto-check if user hasn't manually checked
+        return;
+    }
+}, 10000);
+</script>
+
+{% endblock %}

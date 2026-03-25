@@ -1,0 +1,111 @@
+{% extends "core/base.html" %}
+
+{% block title %}Complete Registration - WedJoy{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Complete Your Registration</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.firstName.id_for_label }}" class="form-label">First Name</label>
+                                    {{ form.firstName }}
+                                    {% if form.firstName.errors %}
+                                        <div class="text-danger">{% for error in form.firstName.errors %}{{ error }}{% endfor %}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.lastName.id_for_label }}" class="form-label">Last Name</label>
+                                    {{ form.lastName }}
+                                    {% if form.lastName.errors %}
+                                        <div class="text-danger">{% for error in form.lastName.errors %}{{ error }}{% endfor %}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">Email (Verified)</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger">{% for error in form.email.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.role.id_for_label }}" class="form-label">Role</label>
+                                    {{ form.role }}
+                                    {% if form.role.errors %}
+                                        <div class="text-danger">{% for error in form.role.errors %}{{ error }}{% endfor %}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.phone_number.id_for_label }}" class="form-label">Phone Number</label>
+                                    {{ form.phone_number }}
+                                    {% if form.phone_number.errors %}
+                                        <div class="text-danger">{% for error in form.phone_number.errors %}{{ error }}{% endfor %}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.profileImage.id_for_label }}" class="form-label">Profile Image</label>
+                            {{ form.profileImage }}
+                            {% if form.profileImage.errors %}
+                                <div class="text-danger">{% for error in form.profileImage.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
+                                    {{ form.password1 }}
+                                    {% if form.password1.errors %}
+                                        <div class="text-danger">{% for error in form.password1.errors %}{{ error }}{% endfor %}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
+                                    {{ form.password2 }}
+                                    {% if form.password2.errors %}
+                                        <div class="text-danger">{% for error in form.password2.errors %}{{ error }}{% endfor %}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <button type="submit" class="btn btn-primary">Complete Registration</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

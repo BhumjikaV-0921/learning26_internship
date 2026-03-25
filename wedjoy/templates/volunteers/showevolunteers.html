@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% load static %}
+{%block content %}
+
+<!-- HERO -->
+ <section class="about-hero" style="background-image: url('{% static 'images/volunterHero.jpg' %}');">
+    <div class="overlay"></div>
+    <div class="hero-inner container">
+        <h1 style="color:#ffd3ac;font-size: 3rem; margin-top:5%;">Volunteer Opportunities</h1>
+        <p class="hero-subtext" id="hero-text">
+          Find meaningful ways to give back to your community. Every hour makes a difference.
+        </p>
+        <nav class="breadcrumb">
+            <a href="{% url 'home' %}">Home</a> ‹ <span>Volunteers</span>
+        </nav>
+    </div>
+</section>
+<section >
+<div class="Volcontainer">
+
+<!-- LEFT SECTION -->
+<div>
+{% for vol in volList %}
+<div class="card">
+
+<img src="{{ vol.cover_image.url }}" />
+
+<div>
+
+<div class="tags">
+<span class="tag">{{ vol.category }}</span>
+</div>
+
+
+<div class="title">{{ vol.title }}</div>
+
+<div class="organization">{{vol.organization}}</div>
+
+<div class="description">
+{{ vol.description}}
+</div>
+
+<div class="details">
+<span>📅 Every {{vol.start_date}}</span>
+<span>⏰ {{vol.required_hours}}</span>
+<span>📍 {{vol.location}}</span>
+</div>
+
+<div class="progress-container">
+<div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;">
+<span>Volunteers needed</span>
+<span>45/60</span>
+</div>
+
+<div class="progress-bar">
+<div class="progress"></div>
+</div>
+</div>
+<a href="{% url 'volunteer_register' vol.id %}">
+    <button class="signup">♡ Sign Up to Volunteer</button>
+</a>
+
+</div>
+</div>
+{% endfor %}
+<div class="card">
+
+<img src="{% static 'images/cleanup.jpg' %}" />
+
+<div>
+
+<div class="tags">
+<span class="tag">Food Bank</span>
+</div>
+
+<div class="title">Food Bank Distribution</div>
+
+<div class="organization">Metro Food Bank</div>
+
+<div class="description">
+Sort and distribute food packages to families in need. No experience required.
+</div>
+
+<div class="details">
+<span>📅 Sunday</span>
+<span>⏰ 10:00 AM</span>
+<span>📍 City Center</span>
+</div>
+
+<div class="progress-container">
+<div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;">
+<span>Volunteers needed</span>
+<span>30/50</span>
+</div>
+
+<div class="progress-bar">
+<div class="progress" style="width:60%"></div>
+</div>
+</div>
+<button class="signup">♡ Sign Up to Volunteer</button>
+</div>
+</div>
+
+<div class="card">
+
+<img src="{% static 'images/community4.jpg' %}" />
+
+<div>
+
+<div class="tags">
+<span class="tag">Environment</span>
+<span class="tag red">Urgent Need</span>
+</div>
+
+<div class="title">Park Clean-up Initiative</div>
+
+<div class="organization">Green Metro Coalition</div>
+
+<div class="description">
+Help maintain our beautiful parks by picking up litter, planting flowers, and maintaining trails.
+</div>
+
+<div class="details">
+<span>📅 Every Saturday</span>
+<span>⏰ 9:00 AM - 12:00 PM</span>
+<span>📍 Riverside Park</span>
+</div>
+
+<div class="progress-container">
+<div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;">
+<span>Volunteers needed</span>
+<span>45/60</span>
+</div>
+
+<div class="progress-bar">
+<div class="progress"></div>
+</div>
+</div>
+
+<button class="signup">♡ Sign Up to Volunteer</button>
+</div>
+</div>
+
+
+</div>
+
+<!-- RIGHT SIDEBAR -->
+
+<div>
+
+<div class="sidebar-card">
+
+<div class="sidebar-title">Community Impact</div>
+
+<div class="impact-box">
+<div class="impact-number">12,450</div>
+<div>Hours Volunteered</div>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div style="font-size:20px;font-weight:600;">847</div>
+<div style="font-size:13px;">Active Volunteers</div>
+</div>
+
+<div class="stat">
+<div style="font-size:20px;font-weight:600;">56</div>
+<div style="font-size:13px;">Partner Organizations</div>
+</div>
+</div>
+
+<div class="sidebar-title" style="margin-top:5%">Top Volunteers</div>
+<div class="volunteer">
+<span>Sarah M.</span>
+<span class="badge">156 hrs</span>
+</div>
+
+<div class="volunteer">
+<span>James L.</span>
+<span class="badge">134 hrs</span>
+</div>
+
+<div class="volunteer">
+<span>Emma K.</span>
+<span class="badge">98 hrs</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+{% endblock content %}

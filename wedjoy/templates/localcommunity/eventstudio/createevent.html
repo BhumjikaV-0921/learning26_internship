@@ -1,0 +1,144 @@
+{% extends 'localcommunity/eventstudio/baseevent.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1>Create Event</h1>
+    <p>Set up a new community event.</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Display validation errors -->
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+
+        <!-- EVENT DETAILS -->
+        <div class="addcard">
+            <h3>Event Details</h3>  
+            <div class="row ">
+                <div class="form-group">
+                    <label>Event Name</label>
+                    {{ form.title }}
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    {{ form.category }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                {{ form.description }}
+            </div>
+
+        </div>
+
+
+        <!-- DATE & TIME -->
+        <div class="addcard">
+            <h3>Date & Time</h3>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Event Date</label>
+                    {{ form.event_date }}
+                </div>
+
+                <div class="form-group">
+                    <label>Start Time</label>
+                    {{ form.start_time }}
+                </div>
+
+                <div class="form-group">
+                    <label>End Time</label>
+                    {{ form.end_time }}
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- LOCATION -->
+        <div class="addcard">
+            <h3>Location</h3>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Venue Name</label>
+                    {{ form.location_name }}
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    {{ form.address }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Latitude</label>
+                    {{ form.latitude }}
+                </div>
+
+                <div class="form-group">
+                    <label>Longitude</label>
+                    {{ form.longitude }}
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- CAPACITY -->
+        <div class="addcard">
+            <h3>Capacity & Tickets</h3>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Max Participants</label>
+                    {{ form.max_participants }}
+                </div>
+
+                <div class="form-group">
+                    <label>Registration Fee</label>
+                    {{ form.registration_fee }}
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- COVER IMAGE -->
+        <div class="addcard">
+            <h3>Cover Image</h3>
+
+            <div class="form-group">
+                {{ form.cover_image }}
+            </div>
+        </div>
+
+
+        <!-- SUBMIT -->
+        <div class="form-group mt-3">
+            <button type="submit" class="publish">Publish Event</button>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock content %}

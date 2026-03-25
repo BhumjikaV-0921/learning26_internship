@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Event RSVP Confirmation</title>
+</head>
+<body>
+<p>Hi {{ user.firstName|default:user.email }},</p>
+<p>Thanks for registering for <strong>{{ event.title }}</strong>.</p>
+<p>Your registration ID: <strong>{{ registration.ticket_id }}</strong></p>
+<p>Event date: {{ event.event_date }} at {{ event.start_time }}.</p>
+<p>Location: {{ event.location_name }}, {{ event.address }}</p>
+<p>We look forward to seeing you there!</p>
+<p>Best,<br/>WedJoy Team</p>
+</body>
+</html>

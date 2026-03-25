@@ -1,0 +1,81 @@
+{% include "adminpanel/base.html" %}
+{% block content %}
+
+<div style="margin-top:-40%;margin-left:18%;overflow:hidden">
+
+<!-- 🔷 TITLE -->
+<h2 style="margin-bottom:20px;">
+    Participants for {{ opportunity.title }}
+</h2>
+
+<!-- 🔷 CARDS -->
+<div class="cards">
+
+    <div class="card">
+        <h3>Total Participants</h3>
+        <h2>{{ total_participants }}</h2>
+    </div>
+
+
+</div>
+
+<!-- 📋 TABLE -->
+<div class="table-container">
+<table>
+
+<thead>
+<tr>
+    <th>User</th>
+    <th>Phone</th>
+    <th>Age</th>
+    <th>Avibility</th>
+    <th>Expiriance</th>
+    <th>Reson</th>
+   
+</tr>
+</thead>
+
+<tbody>
+{% for p in participants %}
+<tr>
+
+<td>
+    <div class="user">
+        <div class="avatar">👤</div>
+        <div>
+            <strong>{{ p.name }}</strong><br>
+            <small>{{ p.email }}</small>
+        </div>
+    </div>
+</td>
+
+<td>
+    {{ p.phone }}
+</td>
+<td>
+    {{ p.age }}
+</td><td>
+    {{ p.availability }}
+</td><td>
+    {{ p.experience }}
+</td><td>
+    {{ p.reason }}
+</td>
+
+</tr>
+{% endfor %}
+
+{% if not participants %}
+<tr>
+    <td colspan="4">No participants found</td>
+</tr>
+{% endif %}
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+{% endblock %}

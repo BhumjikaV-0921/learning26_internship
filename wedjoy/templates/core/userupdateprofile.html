@@ -1,0 +1,67 @@
+
+{% extends 'core/baseUserProfile.html' %}
+{% block content %}
+{% load static %}
+
+<div class="glass-container" style="background: #ffffff">
+
+    <h2 class="form-title">Update Profile</h2>
+    <img src="{{ user.profileImage.url }}" style="width:30%;display: flex;gap: 20px;margin-left:58%;margin-top:0;position:absolute">
+    <br><br><br>
+
+    <form method="POST" class="glass-form">
+        {% csrf_token %}
+
+        <div class="row">
+            
+            <div class="form-group">
+                <label>First Name</label>
+                {{ form.firstName }} 
+                 <label>Email</label>
+                {{ form.email }}
+            </div>
+        
+            
+            <div class="form-group">
+               <label>Last Name</label>
+                {{ form.lastName }}
+
+                  <label>Phone Number</label>
+                {{ form.phone_number }}
+            </div>
+
+
+        </div>
+       
+        <div class="row">
+<div class="form-group">
+                <label>City</label>
+                {{ form.city }}
+                  <label>Gender</label>
+                    {{ form.gender }}
+               
+            </div>
+
+             <div class="form-group">
+                 <label>State</label>
+                {{ form.state }}
+            <label>Address</label>
+            {{ form.address }}
+
+          
+        </div>            
+           
+        
+           
+        </div>
+        
+        <button type="submit" class="btn-glow">Update</button>
+
+    </form>
+
+
+</div>
+
+
+
+{% endblock content %}

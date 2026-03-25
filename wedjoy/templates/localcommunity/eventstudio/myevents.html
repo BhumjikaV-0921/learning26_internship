@@ -1,0 +1,111 @@
+{% extends 'localcommunity/eventstudio/baseevent.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+<div class="business-header">
+
+<div class="business-title">
+<h1>My Events</h1>
+<p>Manage all your created events.</p>
+</div>
+
+<a href="{% url 'localcommunity:createevent' %}"  style="margin-left:85%;margin-top:-5%">
+<button class="create-btn">+ Create Event</button>
+</a>
+
+</div>
+<br>
+
+
+{% for item in eventList %}
+
+<div class="event-card">
+
+<div class="event-image">
+
+{% if item.cover_image %}
+<img src="{{ item.cover_image.url }}">
+{% else %}
+<img src="{% static 'images/default-event.jpg' %}">
+{% endif %}
+
+</div>
+
+
+<div class="event-details">
+
+<div class="event-header">
+
+<h3>{{ item.title }}</h3>
+
+<span class="status
+{% if item.approval_status == 'approved' %}
+active
+{% elif item.approval_status == 'pending' %}
+pending
+{% else %}
+rejected
+{% endif %}
+">
+
+{{ item.approval_status|title }}
+
+</span>
+
+</div>
+
+
+<div class="event-meta">
+
+<span><img src="{% static 'images/calendar.png'  %}" style="width:5%"> {{ item.event_date }}</span>
+
+<span><img src="{% static 'images/clock.png' %}" style="width:5%"> {{ item.start_time }}</span>
+
+<span><img src="{% static 'images/pin.png' %}" style="width:5%"> {{ item.location_name }}</span>
+
+</div>
+
+
+<div class="event-rsvp">
+
+<img src="{% static 'images/people.png' %}" style="width:2%">  {{ item.rsvp_count }}/{{ item.max_participants }} RSVPs
+
+</div>
+
+
+<div class="progress-bar1">
+
+<div class="progress-bar" style="width:{{ item.progress }}%"></div>
+
+</div>
+
+
+<div class="event-actions">
+
+<a href="{% url 'localcommunity:update_event' item.id %}">
+<button class="edit-btn"><img src="{% static 'images/edit.png' %}"> Edit</button>
+</a>
+<a href="{% url 'localcommunity:delete_event' item.id %}">
+<button class="remove-btn"><img src="{% static 'images/dustbin.png' %}"> Delete</button>
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<p>No events created yet.</p>
+
+{% endfor %}
+
+</div>
+
+
+
+{% endblock content %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="vreg-wrapper" style=" background-image: linear-gradient(to bottom right, #fbb47d, #4e2505);">
+    <div class="vreg-card">
+
+        <h2 class="vreg-title">Volunteer Registration</h2>
+        <p class="vreg-subtitle">{{ event.title }}</p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="vreg-grid">
+
+                <div class="vreg-field">
+                    <label class="vreg-label">Name</label>
+                    {{ form.name }}
+                </div>
+
+                <div class="vreg-field">
+                    <label class="vreg-label">Email</label>
+                    {{ form.email }}
+                </div>
+
+                <div class="vreg-field">
+                    <label class="vreg-label">Phone</label>
+                    {{ form.phone }}
+                </div>
+
+                <div class="vreg-field">
+                    <label class="vreg-label">Age</label>
+                    {{ form.age }}
+                </div>
+
+                <div class="vreg-field">
+                    <label class="vreg-label">Availability</label>
+                    {{ form.availability }}
+                </div>
+
+                <div class="vreg-field vreg-field-full">
+                    <label class="vreg-label">Experience</label>
+                    {{ form.experience }}
+                </div>
+
+                <div class="vreg-field vreg-field-full">
+                    <label class="vreg-label">Why do you want to volunteer?</label>
+                    {{ form.reason }}
+                </div>
+
+            </div>
+
+            <button type="submit" class="vreg-submit">
+            Register Now
+            </button>
+
+        </form>
+
+    </div>
+</section>
+{% endblock %}

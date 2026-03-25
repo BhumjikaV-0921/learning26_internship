@@ -1,0 +1,116 @@
+{% extends 'localcommunity/businessowner/basebusiness.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1>Add New Business</h1>
+    <p>List your business to reach the local community.</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Display validation errors -->
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <!-- BASIC INFO -->
+        <div class="card mb-3 p-3">
+            <h3>Basic Information</h3>
+            <div class="row">
+            <div class="form-group">
+                <label>Business Name</label>
+                {{ form.business_name }}
+            </div>
+        
+            <div class="form-group">
+                <label>Category</label>
+                {{ form.category }}
+            </div>
+         </div>
+         <div class="row">
+            <div class="form-group">
+                <label>Phone Number</label>
+                {{ form.contact_number }}
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                {{ form.email }}
+            </div>
+        </div>
+            <div class="form-group">
+                <label>Description</label>
+                {{ form.description }}
+            </div>
+        </div>
+
+        <!-- LOCATION -->
+        <div class="card mb-3 p-3">
+            <h3>Location</h3>
+        <div class="row">
+            <div class="form-group">
+                <label>Street Address</label>
+                {{ form.street_address }}
+            </div>
+            <div class="form-group">
+                <label>City</label>
+                {{ form.city }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label>ZIP Code</label>
+                {{ form.zip_code }}
+            </div>
+            <div class="form-group">
+                <label>Latitude</label>
+                {{ form.latitude }}
+            </div>
+        
+            <div class="form-group">
+                <label>Longitude</label>
+                {{ form.longitude }}
+            </div>
+        </div>
+        </div>
+
+        <!-- BUSINESS HOURS -->
+        <div class="card mb-3 p-3">
+            <h3>Business Hours</h3>
+            {% for bh in business_hours_fields %}
+                <div class="form-group">
+                      <div class="hours">
+                    <label>{{ bh.day }}</label>
+                    {{ bh.open }} to {{ bh.close }}
+                    </div>
+                </div>
+            
+            {% endfor %}
+        </div>
+
+        <!-- PHOTO -->
+        <div class="card mb-3 p-3">
+            <h3>Photo</h3>
+            <div class="form-group">
+                {{ form.photo }}
+            </div>
+        </div>
+
+        <!-- SUBMIT BUTTON -->
+        <div class="form-group mt-3">
+            <button type="submit" class="publish">Add Business</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

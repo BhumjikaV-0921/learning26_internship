@@ -1,0 +1,119 @@
+{% include "adminpanel/base.html" %}
+{% block content%}
+{% load static %}
+
+<div style="margin-top:-40%;margin-left:18%;overflow:hidden">
+
+<div class="cards" >
+    <div class="card">
+        <div>
+            <h3>Total Users</h3>
+            <h2>{{ total_users }}</h2>
+        </div>
+        <div> <img src="{% static 'images/people.png' %}" style="width:15%"> </div>
+    </div>
+
+    <div class="card">
+        <div>
+            <h3>Active</h3>
+            <h2>{{ active_users }}</h2>
+        </div>
+         <div> <img src="{% static 'images/active-user.png' %}" style="width:15%"> </div>
+    </div>
+
+    <div class="card">
+        <div>
+            <h3>Suspended</h3>
+            <h2>{{ suspended_users }}</h2>
+        </div>
+         <div> <img src="{% static 'images/session-time.png' %}" style="width:15%"> </div>
+    </div>
+
+    <div class="card">
+        <div>
+            <h3>New This Month</h3>
+            <h2>{{ new_users }}</h2>
+        </div>
+         <div> <img src="{% static 'images/add-post.png' %}" style="width:15%"> </div>
+    </div>
+</div>
+<form method="GET" class="toolbar">
+
+    <input type="text" name="q" placeholder="Search users..." value="{{ request.GET.q }}">
+
+    <select name="role">
+        <option value="all">All Roles</option>
+        <option value="admin">Admin</option>
+        <option value="owner">Owner</option>
+        <option value="user">User</option>
+    </select>
+
+    <select name="status">
+        <option value="all">All Status</option>
+        <option value="active">Active</option>
+        <option value="suspended">Suspended</option>
+    </select>
+
+    <button type="submit">Filter</button>
+
+</form>
+
+<div class="table-container">
+<table>
+<thead>
+<tr>
+    <th>User</th>
+    <th>City</th>
+    <th>Role</th>
+    <th>Status</th>
+    <th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+{% for user in users %}
+<tr>
+    <td>
+        <div class="user">
+            <div class="avatar">  <img src="{{ user.profileImage.url }}" class="avatar"> </div>
+            <div>
+                <strong>{{ user.get_full_name }}</strong><br>
+                <small>{{ user.email }}</small>
+            </div>
+        </div>
+    </td>
+
+    <td>{{ user.city }}</td>
+
+    <td>
+        <span class="badge gray">{{ user.role }}</span>
+    </td>
+
+    <td>
+        {% if user.is_active %}
+            <span class="badge green">Active</span>
+        {% else %}
+            <span class="badge red">Suspended</span>
+        {% endif %}
+    </td>
+
+   <td class="actions">
+
+    {% if user.is_active %}
+        <a href="{% url 'adminpanel:suspend_user' user.id %}" class="btn red">Suspend</a>
+    {% else %}
+        <a href="{% url 'adminpanel:activate_user' user.id %}" class="btn green">Activate</a>
+    {% endif %}
+
+    <a href="{% url 'adminpanel:delete_user' user.id %}" class="btn gray"
+       onclick="return confirm('Are you sure?')">Delete</a>
+
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,134 @@
+{% include "adminpanel/base.html" %}
+{% block content %}
+{% load static %}
+<div style="margin-top:-40%;margin-left:18%;overflow:hidden">
+
+<!-- 🔷 TOP CARDS -->
+<div class="cards">
+
+    <div class="card">
+        <h3>Total Events</h3>
+        <h2>{{ total_events }}</h2>
+         <div> <img src="{% static 'images/calendar.png' %}" style="width:15%"> </div>
+    </div>
+
+    <div class="card">
+        <h3>Approved</h3>
+        <h2>{{ approved_events }}</h2>
+         <div> <img src="{% static 'images/check-circle.png' %}" style="width:15%"> </div>
+
+    </div>
+
+    <div class="card">
+        <h3>Pending Review</h3>
+        <h2>{{ pending_events }}</h2>
+         <div> <img src="{% static 'images/session-time.png' %}" style="width:15%"> </div>
+
+    </div>
+
+    <div class="card">
+        <h3>Total Attendees</h3>
+        <h2>{{ total_attendees }}</h2>
+         <div> <img src="{% static 'images/rate.png' %}" style="width:15%"> </div>
+
+    </div>
+
+</div>
+
+<!-- 🔍 SEARCH + FILTER -->
+<form method="GET" class="toolbar">
+
+    <input type="text" name="q" placeholder="Search events..." value="{{ request.GET.q }}">
+
+   <select name="status">
+    <option value="all">All Status</option>
+    <option value="approved">Approved</option>
+    <option value="pending">Pending</option>
+    <option value="cancelled">Rejected</option>
+</select>
+
+    <button type="submit">Filter</button>
+
+</form>
+
+<!-- 📋 TABLE -->
+<div class="table-container">
+<table>
+
+<thead>
+<tr>
+    <th>Event</th>
+    <th>Date</th>
+    <th>Location</th>
+    <th>Capacity</th>
+    <th>Status</th>
+    <th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+{% for event in events %}
+<tr>
+
+<td>
+    <div class="user">
+        <div class="avatar">
+            <img src="{{ event.cover_image.url }}" class="avatar">
+        </div>
+        <div>
+            <strong>{{ event.title }}</strong><br>
+            <small>{{ event.category }}</small>
+        </div>
+    </div>
+</td>
+
+<td>{{ event.event_date }}</td>
+
+<td>{{ event.location_name }}</td>
+
+<td>
+    {{ event.current_participants }}/{{ event.max_participants }}
+
+    <div style="background:#eee; height:6px; border-radius:10px; margin-top:5px;">
+        <div style="
+            width: {{ event.fill_percent }}%;
+            background: #22c55e;
+            height:6px;
+            border-radius:10px;">
+        </div>
+    </div>
+</td>
+<td>
+    {% if event.approval_status == "approved" %}
+        <span class="badge green">Approved</span>
+    {% elif event.approval_status == "pending" %}
+        <span class="badge gray">Pending</span>
+    {% else %}
+        <span class="badge red">Rejected</span>
+    {% endif %}
+</td>
+
+<td class="actions">
+
+    {% if event.approval_status == "pending" %}
+        <a href="{% url 'adminpanel:approve_event' event.id %}" class="btn green">Approve</a>
+        <a href="{% url 'adminpanel:reject_event' event.id %}" class="btn red">Reject</a>
+    {% endif %}
+
+    <a href="{% url 'adminpanel:delete_event' event.id %}" 
+       class="btn gray"
+       onclick="return confirm('Delete this event?')">
+       Delete
+    </a>
+
+</td>
+
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+</div>
+
+</div>
+{% endblock %}

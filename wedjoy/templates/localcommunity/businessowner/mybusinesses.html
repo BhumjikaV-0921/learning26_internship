@@ -1,0 +1,67 @@
+{% extends 'localcommunity/businessowner/basebusiness.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="business-header">
+
+
+<div class="business-title">
+    <h1>My Businesses</h1>
+    <p>Manage and monitor all your business listings.</p>
+</div>
+
+<div class="topbar">
+    <a href="{% url 'localcommunity:addbusiness' %}">
+        <button class="create-btn">+ Add Business</button>
+    </a>
+</div>
+
+
+</div>
+
+<div class="business-container">
+
+{% for bsl in businessList %}
+<!-- Business Card 1 -->
+<div class="business-card">
+    {% if bsl.photo.url != null  %}
+    <div class="business-image">
+    <img src="{{ bsl.photo.url }}" alt="">
+    </div>
+    {% else %}
+     <div class="business-image">
+    <img src="{% static 'images/pin.png' %}" alt="">
+    </div>
+    {% endif %}
+
+    <div class="business-details">
+        <div class="business-header">
+            <h3>{{ bsl.business_name }}
+                {% if bsl.approval_status == "approved" %}
+                    <span class="status active">Approved</span>
+                {% elif bsl.approval_status == "pending" %}
+                    <span class="status pending">Pending</span>
+                {% else %}
+                    <span class="status rejected">Rejected</span>
+                {% endif %}
+            </h3>
+        </div>
+        <p class="discription">{{ bsl.description|truncatechars:150 }}</p>
+        <p class="location">📍{{ bsl.street_address }}, {{ bsl.city }}</p>
+
+        <div class="business-stats">
+            ⭐ <strong>4.8</strong> (124 reviews)
+        </div>
+
+        <div class="business-actions">
+            <a href ="{% url 'localcommunity:updatebusiness' business_id=bsl.id %}"><button class="edit-btn" ><img src="{% static 'images/edit.png' %}" alt="Edit"> Edit</button></a>
+           <a href="{% url 'localcommunity:deleteBusiness' business_id=bsl.id %}"  onclick="return confirm('Are you sure you want to delete this item?');"> <button class="remove-btn"><img src="{% static "images/dustbin.png" %}" alt="Remove"> Remove</button></a>
+        </div>
+
+    </div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock content %}

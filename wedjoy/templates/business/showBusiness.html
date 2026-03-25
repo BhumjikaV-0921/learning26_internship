@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+{%block content %}
+
+<!-- HERO -->
+ <section class="about-hero" style="background-image: url('{% static 'images/businessHero.jpg' %}');">
+    <div class="overlay"></div>
+    <div class="hero-inner container">
+        <h1 style="color:#ffd3ac;font-size: 3rem; margin-top:5%;">Support Your Neighborhood</h1>
+        <p class="hero-subtext" id="hero-text">
+          Discover local gems, from cozy cafés to fitness studios. Every purchase supports your community.
+        </p>
+        <nav class="breadcrumb">
+            <a href="{% url 'home' %}">Home</a> ‹ <span>Business</span>
+        </nav>
+    </div>
+</section>
+<!-- Search Area -->
+        <div class="search-area" background="#fff">
+
+            <form method="GET">
+    <div class="search-box">
+        <span class="search-icon">
+            <img src="{% static 'images/search.png' %}">
+        </span>
+
+        <input  type="text"  name="q" value="{{ query }}"  placeholder="Search business..." oninput="debounceSearch(this)">
+    </div>
+</form>
+
+        </div>
+</section>
+<section class="business-section" style="background:#fff;margin-top:-2%;">
+  <div class="container">
+    <!-- CARDS -->
+    <div class="cards-grid">
+
+      <!-- CARD 1 -->
+       {% for bsl in businessList %}
+      <a href="{% url 'business' business_id=bsl.id %}" style="text-decoration:none;color:inherit;">
+      <div class="business-card">
+        <div class="image-wrapper">
+          <img src="{{ bsl.photo.url }}" alt="">
+        </div>
+
+        <div class="card-content">
+
+          <div class="top-meta">
+            <span class="category">{{ bsl.category }}</span>
+            <div class="rating">
+              <i class="fa-solid fa-star"></i>
+              4.8 <span>(124)</span>
+            </div>
+          </div>
+
+          <h3>{{ bsl.business_name }}</h3>
+
+          <div class="bottom-meta">
+            <p><img src="{% static 'images/pin.png' %}" style="width:11%">{{bsl.city}}</p>
+            <p><img src="{% static 'images/clock.png' %}" style="width:10%"> Open {{bsl.sunday_open}}</p>
+          </div>
+
+        </div>
+      </div>
+      </a>
+{% endfor %}
+    
+    </div>
+
+  </div>
+</section>
+
+<script>
+let timer;
+function debounceSearch(input) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+        input.form.submit();
+    }, 400); // 400ms delay
+}
+</script>
+
+
+
+{%  endblock content %}

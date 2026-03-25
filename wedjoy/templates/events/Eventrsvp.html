@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #0f2721, #204343, #2c645c);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .rsvp-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 90vh;
+    }
+
+    .rsvp-card {
+        width: 900px;
+        border-radius: 20px;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background: #fff;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        margin-top:5%;
+    }
+
+    .event-image {
+        background-size: cover;
+        background-position: center;
+        height: 100%;
+    }
+
+    .event-details {
+        padding: 40px;
+        color: #270000;
+    }
+
+    .event-title {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .event-desc {
+        font-size: 0.95rem;
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    .info {
+        margin-bottom: 15px;
+        font-size: 0.95rem;
+    }
+
+    .info span {
+        color: #002d28;
+        font-weight: 500;
+    }
+
+    .rsvp-btn {
+        margin-top: 25px;
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .rsvp-btn:hover {
+        transform: scale(1.05);
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 6px 12px;
+        background: #ffd3ac;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        margin-bottom: 15px;
+    }
+
+    .full {
+        background: #ff4d4d;
+    }
+
+    @media(max-width: 768px){
+        .rsvp-card {
+            grid-template-columns: 1fr;
+        }
+
+        .event-image {
+            height: 250px;
+        }
+    }
+</style>
+
+<div class="rsvp-container">
+
+    <div class="rsvp-card">
+
+        <!-- LEFT IMAGE -->
+        <div class="event-image"
+             style="background-image: url('{{ event.cover_image.url }}');">
+        </div>
+
+        <!-- RIGHT DETAILS -->
+        <div class="event-details">
+
+            <div class="badge">
+                {{ event.category }}
+            </div>
+
+            <div class="event-title">
+                {{ event.title }}
+            </div>
+
+            <div class="event-desc">
+                {{ event.description|truncatewords:25 }}
+            </div>
+
+            <div class="info">
+                <img src="{% static 'images/calendar.png'%}" style='width:4%'> <span>{{ event.event_date }}</span>
+            </div>
+
+            <div class="info">
+                <img src="{% static 'images/clock.png'%}" style='width:4%'> <span>{{ event.start_time }} - {{ event.end_time }}</span>
+            </div>
+
+            <div class="info">
+                <img src="{% static 'images/pin.png'%}" style='width:5%'> <span>{{ event.location_name }}</span>
+            </div>
+
+            <div class="info">
+                💰 <span>₹{{ event.registration_fee }}</span>
+            </div>
+
+            <div class="info">
+                <img src="{% static 'images/people.png'%}" style='width:5%;margin-top:2%'> <span>{{ event.max_participants }}</span> seats available
+            </div>
+
+            <!-- RSVP FORM -->
+            <form method="POST">
+                {% csrf_token %}
+
+                {% if user.is_authenticated %}
+                    <button type="submit" class="rsvp-btn">
+                        🎟 Confirm RSVP
+                    </button>
+                {% else %}
+                    <a href="/login/" class="rsvp-btn" style="text-align:center; display:block;">
+                        Login to RSVP
+                    </a>
+                {% endif %}
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
