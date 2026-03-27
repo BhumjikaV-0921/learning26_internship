@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import UserSignupForm, UserLoginForm
+from .forms import UserSignupForm, UserLoginForm, UserUpdateProfile, UserPasswordChangeForm, UserPostForm, ContactForm
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from events.models import Event,EventRegistration
@@ -10,10 +10,10 @@ from volunteers.models import VolunteerRegistration
 from business.models import Business
 from django.conf import settings
 from django.contrib import messages
-from .forms import UserSignupForm, UserLoginForm, UserUpdateProfile, UserPasswordChangeForm,  UserPostForm
 from django.contrib.auth import update_session_auth_hash, logout
 from .models import UserPost
 import os
+from django.utils import timezone
 
 def aboutus(request):
     return render(request, "core/aboutus.html")
@@ -138,8 +138,15 @@ def userregisteredevents(request):
 
 @login_required
 def uservolunteering(request):
-   vregistrations = VolunteerRegistration.objects.all()
-    
+   vregistrations = VolunteerRegistration.objects.filter(email=request.user.email)
+   now = timezone.now()
+   for reg in vregistrations:
+       # time_diff = (now - reg.created_at).total_seconds()
+       # reg.can_edit = time_diff < 1800  # 30 minutes
+       # reg.can_delete = time_diff < 7200  # 2 hours
+       reg.can_edit = True  # Temporary
+       reg.can_delete = True  # Temporary
+       reg.is_expired = reg.event.end_date < now.date()
    return render(request, "core/uservolunteering.html", {"registrations": vregistrations})
 
 def usercomments(request):
@@ -211,3 +218,16 @@ def premium_membership(request):
 def careers(request):
     return render(request, "core/careers.html")
     
+
+# -------  contact us page -------
+def contactus(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('contactus')
+            messages.success(request, "Form submitted successfully!")
+    else:
+        form = ContactForm()
+    return render(request, 'core/contactus.html', {'form': form})

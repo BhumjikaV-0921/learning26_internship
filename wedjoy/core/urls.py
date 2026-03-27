@@ -9,6 +9,8 @@ urlpatterns = [
     path("logout/", views.custom_logout, name="logout"),
    path('aboutus/', views.aboutus, name='aboutus'),
    path('profile/', views.Userprofile, name='Userprofile'),
+   # -- footer --
+    path('contactus/',views.contactus, name='contactus'),
 
     path('userregisteredevents/',views.userregisteredevents, name='userregisteredevents'),
     path('uservolunteering/',views.uservolunteering, name='uservolunteering'),

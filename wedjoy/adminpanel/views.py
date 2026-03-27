@@ -2,6 +2,8 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
+from django.db.models.functions import TruncMonth
 from django.contrib import messages
 from core.models import User
 from events.models import Event
@@ -59,11 +61,39 @@ def dashboard(request):
     total_businesses = Business.objects.count()
     total_volunteers = VolunteerOpportunity.objects.count()
 
+    # 📈 Platform Growth (Businesses per month)
+    growth_qs = (
+        Business.objects
+        .annotate(month=TruncMonth('created_at'))
+        .values('month')
+        .annotate(count=Count('id'))
+        .order_by('month')
+    )
+
+    months = [g['month'].strftime("%b") for g in growth_qs]
+    growth_data = [g['count'] for g in growth_qs]
+
+    # 🍩 Business Categories
+    category_qs = (
+        Business.objects
+        .values('category')
+        .annotate(count=Count('id'))
+    )
+
+    categories = [c['category'] for c in category_qs]
+    category_counts = [c['count'] for c in category_qs]
+
     return render(request, "adminpanel/dashboard.html", {
         'total_users': total_users,
         'total_events': total_events,
         'total_businesses': total_businesses,
-        'total_volunteers': total_volunteers
+        'total_volunteers': total_volunteers,
+
+        # 👇 NEW DATA FOR CHARTS
+        'months': months,
+        'growth_data': growth_data,
+        'categories': categories,
+        'category_counts': category_counts,
     })
 
 

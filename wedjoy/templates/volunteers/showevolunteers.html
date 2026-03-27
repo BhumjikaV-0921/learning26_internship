@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load tz %}
 {%block content %}
 
 <!-- HERO -->
@@ -21,6 +22,7 @@
 <!-- LEFT SECTION -->
 <div>
 {% for vol in volList %}
+{% now "Y-m-d" as today %}
 <div class="card">
 
 <img src="{{ vol.cover_image.url }}" />
@@ -56,9 +58,13 @@
 <div class="progress"></div>
 </div>
 </div>
+{% if vol.end_date|date:"Y-m-d" >= today %}
 <a href="{% url 'volunteer_register' vol.id %}">
     <button class="signup">♡ Sign Up to Volunteer</button>
 </a>
+{% else %}
+<button class="signup" disabled style="background:gray;">Expired</button>
+{% endif %}
 
 </div>
 </div>

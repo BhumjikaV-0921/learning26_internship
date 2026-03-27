@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<!-- HERO -->
+<section class="about-hero">
+    <div class="overlay"></div>
+    <div class="hero-inner container">
+        <h1 style="color:#ffd3ac;font-size: 3rem; margin:0;">About Us</h1>
+        <p class="hero-subtext" id="hero-text">
+            Discover inspiring events, support local businesses, and make a difference
+            through meaningful volunteer opportunities.
+        </p>
+        <nav class="breadcrumb">
+            <a href="{% url 'home' %}">Home</a> ‹ <span>About us</span>
+        </nav>
+    </div>
+</section>
+<div class="contact-container">
+    <!-- LEFT SIDE -->
+    <div class="contact-left">
+        <h1>Get in Touch</h1>
+        <h4>I’d like to hear from you!</h4>
+
+        <p>
+            If you have any inquiries or just want to say hi,
+            please use the contact form!
+        </p>
+
+        <div class="contact-info">
+            <p>📧 support@linkup.com</p>
+            <p>📍 New York, USA</p>
+            <p>📞 +1 (234) 567-890</p>
+        </div>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="contact-right">
+
+        <!-- SUCCESS MESSAGE -->
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color: green;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <!-- FORM -->
+        <form method="POST" action="{% url 'contactus' %}">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label>Email *</label>
+                {{ form.email }}
+            </div>
+
+            <div class="input-group">
+                <label>Location</label>
+                {{ form.location }}
+            </div>
+
+            <div class="input-group">
+                <label>Phone</label>
+                {{ form.phone }}
+            </div>
+
+            <button type="submit">Send</button>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock content %}

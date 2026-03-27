@@ -47,28 +47,37 @@
 </div>
 
 <script>
-new Chart(document.getElementById('lineChart'), {
-    type: 'line',
-    data: {
-        labels: ['Jan','Feb','Mar','Apr','May','Jun'],
-        datasets: [{
-            label: 'Growth',
-            data: [100, 300, 250, 400, 500, 600],
-            borderWidth: 2,
-            fill: true
-        }]
-    }
-});
+    const months = {{ months|safe }};
+    const growthData = {{ growth_data|safe }};
 
-new Chart(document.getElementById('donutChart'), {
-    type: 'doughnut',
-    data: {
-        labels: ['Food','Health','Shopping','Services'],
-        datasets: [{
-            data: [35,25,20,20]
-        }]
-    }
-});
+    const categories = {{ categories|safe }};
+    const categoryCounts = {{ category_counts|safe }};
+
+    // 📈 REAL Growth Chart
+    new Chart(document.getElementById('lineChart'), {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Platform Growth',
+                data: growthData,
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
+        }
+    });
+
+    // 🍩 REAL Category Chart
+    new Chart(document.getElementById('donutChart'), {
+        type: 'doughnut',
+        data: {
+            labels: categories,
+            datasets: [{
+                data: categoryCounts
+            }]
+        }
+    });
 </script>
 
 {% endblock %}

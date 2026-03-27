@@ -108,8 +108,8 @@ def reviews(request):
     return render(request, "localcommunity/businessowner/reviews.html")
 
 
-def analyticsbusiness(request):
-    return render(request, "localcommunity/businessowner/analyticsbusiness.html")
+# def analyticsbusiness(request):
+   # return render(request, "localcommunity/businessowner/analyticsbusiness.html")
 
 
 # ================= SETTINGS (FIXED) =================
@@ -219,8 +219,44 @@ def createevent(request):
 
     return render(request, "localcommunity/eventstudio/createevent.html", {"form": form})
 
-# ======  update event ======
 
+@login_required
+@role_required(allowed_roles=["event_organizer", "owner"])
+def attendeesevent(request):
+
+    registrations = EventRegistration.objects.filter(
+        event__organizer=request.user
+    ).select_related('event', 'user')
+
+    attendees = []
+    for reg in registrations:
+        status_mapping = {
+            'registered': 'Pending',
+            'attended': 'Confirmed',
+            'cancelled': 'Cancelled'
+        }
+
+        attendees.append({
+            'name': f"{reg.user.first_name} {reg.user.last_name}".strip() or reg.user.username,
+            'email': reg.user.email,
+            'event_title': reg.event.title,
+            'status': status_mapping.get(reg.status, reg.status),
+            'rsvp_date': reg.registration_date.date(),
+        })
+
+    context = {
+        'attendees': attendees,
+        'confirmed_count': sum(1 for a in attendees if a['status'] == 'Confirmed'),
+        'pending_count': sum(1 for a in attendees if a['status'] == 'Pending'),
+        'cancelled_count': sum(1 for a in attendees if a['status'] == 'Cancelled'),
+        'all_emails': ','.join([a['email'] for a in attendees]),
+    }
+
+    return render(request, "localcommunity/eventstudio/attendeesevent.html", context)
+
+
+# ======  update event ======
+ 
 @login_required
 def update_event(request, event_id):
 
@@ -248,9 +284,6 @@ def delete_event(request, event_id):
 
     return redirect("localcommunity:myevents")
 
-
-def attendeesevent(request):
-    return render(request, "localcommunity/eventstudio/attendeesevent.html")
 def analyticsevent(request):
     return render(request, "localcommunity/eventstudio/analyticsbusiness.html")
 @login_required
