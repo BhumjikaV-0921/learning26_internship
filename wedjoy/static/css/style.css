@@ -819,6 +819,27 @@ h1 {
   transform: translateY(-6px);
 }
 
+.business-card.dimmed {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.status-overlay {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 12px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.status-overlay.pending { background: rgba(110, 110, 110, 0.85); }
+.status-overlay.rejected { background: rgba(220, 45, 75, 0.9); }
+.status-overlay.approved { background: rgba(22, 163, 74, 0.9); }
+
 /* IMAGE */
 
 .image-wrapper {

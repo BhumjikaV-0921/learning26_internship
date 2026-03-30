@@ -71,9 +71,14 @@ class UserPostForm(forms.ModelForm):
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
-        fields = ['email', 'location', 'phone']
+        fields = ['email', 'location', 'phone', 'review']
         widgets = {
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'location': forms.TextInput(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'review': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+                'placeholder': 'Share your review (optional)'
+            }),
         }

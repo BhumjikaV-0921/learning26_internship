@@ -11,7 +11,7 @@ from business.models import Business
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash, logout
-from .models import UserPost
+from .models import UserPost, Contact
 import os
 from django.utils import timezone
 
@@ -103,7 +103,8 @@ def Userprofile(request):
 def home(request):
     events = Event.objects.order_by('-id')[:3]
     business = Business.objects.order_by('-id')[:3]
-    return render(request, "core/index.html", {"events": events , "business" : business})
+    contact_reviews = Contact.objects.filter(review__isnull=False).exclude(review__exact='').order_by('-created_at')[:5]
+    return render(request, "core/index.html", {"events": events , "business" : business, "contact_reviews": contact_reviews})
 
 @login_required
 def userupdateprofile(request):

@@ -89,6 +89,7 @@ class Contact(models.Model):
     email = models.EmailField()
     location = models.CharField(max_length=200)
     phone = models.CharField(max_length=15)
+    review = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True,null=True)
 
     def __str__(self):

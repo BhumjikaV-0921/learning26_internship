@@ -24,7 +24,7 @@
 {% if user.is_authenticated %}
 
 <div class="user-menu">
-    <a href="{% url 'usercomments' %}"><img src="{{ user.profileImage.url }}" alt="profile" class="profile-img" id="profileBtn"></a>
+    <a href="{% url 'userregisteredevents' %}"><img src="{{ user.profileImage.url }}" alt="profile" class="profile-img" id="profileBtn"></a>
 </div>
 
 {% else %}

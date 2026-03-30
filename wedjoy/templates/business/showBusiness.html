@@ -37,10 +37,17 @@
 
       <!-- CARD 1 -->
        {% for bsl in businessList %}
+      {% if bsl.approval_status == 'approved' %}
       <a href="{% url 'business' business_id=bsl.id %}" style="text-decoration:none;color:inherit;">
-      <div class="business-card">
-        <div class="image-wrapper">
+      {% else %}
+      <div style="cursor: default;">
+      {% endif %}
+      <div class="business-card{% if bsl.approval_status != 'approved' %} dimmed{% endif %}">
+        <div class="image-wrapper" style="position: relative;">
           <img src="{{ bsl.photo.url }}" alt="">
+          {% if bsl.approval_status != 'approved' %}
+          <div class="status-overlay {{ bsl.approval_status }}">{{ bsl.approval_status|title }}</div>
+          {% endif %}
         </div>
 
         <div class="card-content">
@@ -62,7 +69,11 @@
 
         </div>
       </div>
+      {% if bsl.approval_status == 'approved' %}
       </a>
+      {% else %}
+      </div>
+      {% endif %}
 {% endfor %}
     
     </div>

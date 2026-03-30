@@ -37,10 +37,17 @@
         <div class="events-grid">
             {% for item in eventList %}
             <!-- CARD 1 -->
+            {% if item.approval_status == 'approved' %}
              <a href="{% url 'events' item.id %}" style="text-decoration:none;">
-            <div class="event-card">
-                <div class="image-wrapper">
+            {% else %}
+             <div style="cursor: default;">
+            {% endif %}
+            <div class="event-card{% if item.approval_status != 'approved' %} dimmed{% endif %}">
+                <div class="image-wrapper" style="position: relative;">
                     <img src="{{ item.cover_image.url }}" alt="">
+                    {% if item.approval_status != 'approved' %}
+                    <div class="status-overlay {{ item.approval_status }}" style="background:red;color:white">{{ item.approval_status|title }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="card-content">
@@ -53,7 +60,11 @@
                     <button class="rsvp-btn">RSVP Now</button>
                 </div>
             </div>
+            {% if item.approval_status == 'approved' %}
         </a>
+        {% else %}
+        </div>
+        {% endif %}
         {% endfor %}
         </div>
 

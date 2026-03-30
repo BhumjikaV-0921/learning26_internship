@@ -5,13 +5,13 @@
 <section class="about-hero">
     <div class="overlay"></div>
     <div class="hero-inner container">
-        <h1 style="color:#ffd3ac;font-size: 3rem; margin:0;">About Us</h1>
+        <h1 style="color:#ffd3ac;font-size: 3rem; margin:0;">Contact Us</h1>
         <p class="hero-subtext" id="hero-text">
             Discover inspiring events, support local businesses, and make a difference
             through meaningful volunteer opportunities.
         </p>
         <nav class="breadcrumb">
-            <a href="{% url 'home' %}">Home</a> ‹ <span>About us</span>
+            <a href="{% url 'home' %}">Home</a> ‹ <span>Contact us</span>
         </nav>
     </div>
 </section>
@@ -60,6 +60,11 @@
             <div class="input-group">
                 <label>Phone</label>
                 {{ form.phone }}
+            </div>
+
+            <div class="input-group">
+                <label>Review</label>
+                {{ form.review }}
             </div>
 
             <button type="submit">Send</button>

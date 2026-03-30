@@ -61,7 +61,7 @@
   <h1 align="center" style="font-family:Times New Roman,Times,serif;">Bringing Your Local Community<span style="color:#00211d;"> Closer Than Ever</span> </h1><br>
   <p class="pe">At Wedjoy, we believe strong communities create stronger lives. Discover exciting local events, meaningful volunteering opportunities, <br>and trusted neighborhood businesses — all in one thoughtfully designed platform. Whether you’re looking to connect, <br>contribute, or grow, Wedjoy makes it easier to engage with the people and places that shape your community.
   <br><br>
-      <a href="#" class="Pbtn-login">Explore</a>
+      <a href="{% url 'login' %}" class="Pbtn-login">Explore</a>
 </p><br>
 </div></center><br><br>
 
@@ -142,7 +142,7 @@
           <div class="step-number">01</div>
           <img src="{% static 'images/search.png' %}" style="width:35%">
         </div>
-        <h3>Explore Your Community</h3>
+       <h3>Explore Your Community</h3> 
         <p>Browse local events, discover nearby businesses, and find volunteer opportunities happening right around you.</p>
       </div>
 
@@ -151,7 +151,6 @@
           <div class="step-number">02</div>
                     <img src="{% static 'images/booking.png' %}" style="width:35%">
         </div>
-        <h3>Join & Participate</h3>
         <p>RSVP to events, support local shops, and sign up for causes you care about — all in one place.</p>
       </div>
 
@@ -275,6 +274,21 @@
                     </div>
                 </div>
             </div>
+
+            {% for contact in contact_reviews %}
+            <div class="Testimonialcard">
+                <div class="quote-icon">❝</div>
+                <div class="stars">★★★★★</div>
+                <p>"{{ contact.review|linebreaksbr }}"</p>
+                <div class="profile">
+                    <div class="avatar">{{ contact.email|slice:":2"|upper }}</div>
+                    <div>
+                        <div class="name">{{ contact.email }}</div>
+                        <div class="role">Community Feedback</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
 
         </div>
     </div>

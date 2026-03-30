@@ -29,7 +29,39 @@ def user_dashboard(request):
 @login_required
 @role_required(allowed_roles=["event_organizer"])
 def eventstudio(request):
-    return render(request, "localcommunity/eventstudio/eventstudio.html")
+    events = Event.objects.filter(organizer=request.user).annotate(rsvp_count=Count('eventregistration'))
+    total_events = events.count()
+    total_rsvps = sum(getattr(event, 'rsvp_count', 0) for event in events)
+
+    avg_attendance = 0
+    if total_events > 0:
+        avg_attendance = round(sum(
+            (getattr(event, 'rsvp_count', 0) / event.max_participants * 100) if event.max_participants else 0
+            for event in events
+        ) / total_events)
+
+    comments_count = 0
+
+    upcoming_events = []
+    for event in events.order_by('event_date')[:3]:
+        maxp = event.max_participants or 0
+        rsvps = getattr(event, 'rsvp_count', 0)
+        prg = int((rsvps / maxp * 100)) if maxp else 0
+        upcoming_events.append({
+            'event': event,
+            'rsvp_count': rsvps,
+            'progress': prg,
+        })
+
+    context = {
+        'total_events': total_events,
+        'total_rsvps': total_rsvps,
+        'avg_attendance': avg_attendance,
+        'comments_count': comments_count,
+        'upcoming_events': upcoming_events,
+    }
+
+    return render(request, "localcommunity/eventstudio/eventstudio.html", context)
 
 # Business Owner Views
 def businessownerdashboard(request):
